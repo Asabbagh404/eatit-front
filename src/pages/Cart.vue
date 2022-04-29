@@ -18,6 +18,12 @@
               style="top: 5px; left: 5px"
               class="absolute text-red-5 text-h5"
             ></q-icon>
+            <q-icon
+              @click="deleteElement"
+              name="edit"
+              style="top: 5px; left: 30px"
+              class="absolute text-white text-h5"
+            ></q-icon>
             <img :src="image" style="width: 100%;">
           </div>
           <q-card-section>

@@ -33,7 +33,13 @@
       </q-list>
     </q-drawer>
     <q-page-container>
-      <router-view />
+      <transition
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+        :duration="300"
+      >
+        <router-view />
+      </transition>
     </q-page-container>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <router-link :to="{ name: 'cart' }" >
