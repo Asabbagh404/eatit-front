@@ -12,85 +12,74 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          <router-link :to="{ name: 'categories' }">
+            <img src="~assets/logo_465x320.png" alt="" style="height: 40px" class="block q-my-auto">
+          </router-link>
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
-
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       bordered
     >
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
+          class="q-mt-lg"
         />
       </q-list>
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <router-link :to="{ name: 'cart' }" >
+        <q-btn fab icon="shopping_cart" color="primary">
+          <div v-if="cartStore.cart.length > 0" style="transform: translateY(-7px);font-weight: 900;">{{ cartStore.cart.length }}</div>
+        </q-btn>
+      </router-link>
+    </q-page-sticky>
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import { useCartStore } from 'stores/cart-store'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Menu',
+    caption: 'Voir le menu',
+    icon: 'restaurant_menu',
+    link: '/'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
+    title: 'Panier',
+    caption: 'Voir le panier',
+    icon: 'shopping_cart',
     link: 'https://github.com/quasarframework'
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
     title: 'Twitter',
-    caption: '@quasarframework',
+    caption: '@OMalo',
     icon: 'rss_feed',
     link: 'https://twitter.quasar.dev'
   },
   {
     title: 'Facebook',
-    caption: '@QuasarFramework',
+    caption: '@OMalo',
     icon: 'public',
     link: 'https://facebook.quasar.dev'
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Instagram',
+    caption: '@OMalo',
+    icon: 'public',
+    link: 'https://facebook.quasar.dev'
   }
 ]
 
@@ -103,13 +92,15 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const cartStore = useCartStore()
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
+      cartStore
     }
   }
 })
