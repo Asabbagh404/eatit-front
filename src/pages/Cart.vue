@@ -75,6 +75,9 @@
             </div>
 <!--            <div class="q-my-sm">{{ element.description }}</div>-->
             <span>{{ element.price * (element.quantity || 1) }} €</span>
+            <div v-for="(extra, index) of element.extras" :key="index" class="text-right">
+              <q-chip v-if="extra.value" :label="extra.name" color="secondary" class="text-white"></q-chip>
+            </div>
           </q-card-section>
         </q-card>
       </div>
@@ -87,7 +90,7 @@ import { defineComponent, ref } from 'vue'
 import { useCartStore } from 'stores/cart-store'
 
 export default defineComponent({
-  name: 'VItems',
+  name: 'VCart',
   setup () {
     const cartStore = useCartStore()
     const onModifyElement = ref(null)

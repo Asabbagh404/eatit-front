@@ -8,7 +8,7 @@ const routes = [
       { path: '', redirect: { name: 'categories' } },
       { path: '/categories', component: () => import('pages/Categories.vue'), name: 'categories' },
       { path: '/categories/:categoryId', component: () => import('pages/Items.vue'), name: 'items' },
-      { path: '/categories/:categoryId/:itemId', component: () => import('pages/Items.vue') },
+      { path: '/categories/:categoryId/:itemId', component: () => import('pages/SingleItem.vue'), name: 'singleItem' },
       { path: '/cart', component: () => import('pages/Cart.vue'), name: 'cart' },
       {
         path: '/buy',

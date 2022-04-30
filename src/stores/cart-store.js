@@ -19,7 +19,12 @@ export const useCartStore = defineStore('cart', {
   },
   actions: {
     addToCart (element) {
-      const index = this.cart.findIndex(cartEl => +cartEl.id === +element.id)
+      const index = this.cart.reduce((tot, el, index) => {
+        if (JSON.stringify(el) === JSON.stringify(element)) {
+          return index
+        }
+        return tot
+      }, -1)
       if (index !== -1) {
         if (!this.cart[index].quantity) {
           this.cart[index].quantity = 1

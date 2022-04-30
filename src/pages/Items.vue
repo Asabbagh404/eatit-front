@@ -9,19 +9,27 @@
     <h2 class="text-h2 q-my-none">{{ currentCategoriesName }}</h2>
     <div class="q-pa-md">
       <div class="row">
-        <q-card
-          class="col-6 q-pr-sm q-mt-lg"
-          v-for="({ id, name, image }, index) in currentCategoriesElements"
+        <component
+          v-for="(element, index) in currentCategoriesElements"
           :key="index"
-          @click="addToCart(id)"
+          :is="isSettingable(element) ? 'router-link' : 'span'"
+          :to="{ name: 'singleItem', params: { categoryId: currentCategorie.id, itemId: element.id } }"
+          class="col-6 q-pr-sm q-mt-lg"
         >
+          <q-card
+            @click="addToCart(element.id)"
+            class="full-height"
+          >
             <div style="height: 100px" class="overflow-hidden row content-center">
-              <img :src="image" style="width: 100%;">
+              <img :src="element.image" style="width: 100%;">
             </div>
             <q-card-section>
-              <div class="text-h6">{{ name }}</div>
+              <div class="text-h6">{{ element.name }}</div>
+              <div class="text-caption">{{ element.description }}</div>
+              <div class="text-h6 text-right">{{ element.price }} €</div>
             </q-card-section>
-        </q-card>
+          </q-card>
+        </component>
       </div>
     </div>
   </q-page>
@@ -50,9 +58,21 @@ export default defineComponent({
     const currentCategoriesElements = computed(() => {
       return currentCategorie.value.elements
     })
+
     function addToCart (id) {
+      const element = getItemById(id)
+      if (isSettingable(element)) return
       cartStore.addToCart(currentCategoriesElements.value.find(el => el.id === id))
     }
+
+    function isSettingable (element) {
+      return element.options || element.extras || element.ingredients
+    }
+
+    function getItemById (id) {
+      return currentCategoriesElements.value.find(el => +el.id === +id)
+    }
+
     return {
       lorem,
       slide,
@@ -60,7 +80,8 @@ export default defineComponent({
       currentCategoriesName,
       currentCategoriesElements,
       addToCart,
-      cartStore
+      cartStore,
+      isSettingable
     }
   }
 })

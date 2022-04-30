@@ -10,7 +10,6 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
         <q-toolbar-title>
           <router-link :to="{ name: 'categories' }">
             <img src="~assets/logo_465x320.png" alt="" style="height: 40px" class="block q-my-auto">
@@ -53,7 +52,7 @@
       <component
         :is="cartStore.cart.length === 0 ? 'span' : 'router-link'"
         :to="{ name: 'buy' }" >
-        <q-btn fab color="primary" :label="'Acheter ' + cartStore.totalCart + ' €'" :disable="cartStore.cart.length === 0"></q-btn>
+        <q-btn  class="btn-shop" fab color="primary" :label="'Acheter ' + cartStore.totalCart + ' €'" :disable="cartStore.cart.length === 0"></q-btn>
       </component>
     </q-page-sticky>
   </q-layout>
