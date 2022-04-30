@@ -24,7 +24,7 @@
           :to="{ name: 'items', params: { categoryId: category.id } }"
           style="min-width: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;"
         >
-          <div class="overflow-hidden row items-center content-center" style="height: 70px;width: 70px;border-radius: 100%; background-size: cover; background-position: center" :style="`background-image: url(${category.image})`"></div>
+          <div class="overflow-hidden row items-center content-center supbar-image-cat" style="height: 70px;width: 70px;border-radius: 100%; background-size: cover; background-position: center" :style="`background-image: url(${category.image})`"></div>
           <div class="supbar-category-text">{{ category.name }}</div>
         </router-link>
       </q-bar>
@@ -44,7 +44,7 @@
       </q-list>
     </q-drawer>
     <q-page-container>
-      <q-icon name="arrow_back" class="text-h4 text-grey-9 q-ma-sm" @click="router.go(-1)"></q-icon>
+      <q-icon name="arrow_back" class="text-h5 q-pa-sm text-dark q-ma-sm fixed bg-primary shadow-3" style="position: fixed;top: 175px;z-index: 999;border-radius: 100%" @click="router.go(-1)"></q-icon>
       <transition
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
@@ -164,8 +164,17 @@ export default defineComponent({
 }
 .router-link-active {
   .supbar-category-text {
-    opacity: .6;
+    opacity: 1;
   }
+  .supbar-image-cat {
+    opacity: 1;
+  }
+}
+.supbar-category-text {
+  opacity: .6;
+}
+.supbar-image-cat {
+  opacity: .6;
 }
 
 </style>

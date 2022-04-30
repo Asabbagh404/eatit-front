@@ -26,22 +26,25 @@
           :key="index"
           :is="isSettingable(element) ? 'router-link' : 'span'"
           :to="{ name: 'singleItem', params: { categoryId: currentCategorie.id, itemId: element.id } }"
-          class="col-6 q-pr-sm q-mt-lg"
+          class="col-12 q-pr-sm q-mt-lg"
         >
           <q-card
             @click="addToCart(element.id)"
-            class="full-height"
+            class="bg-grey-2 row"
+            style="height: 160px"
           >
-            <div style="height: 100px" class="overflow-hidden row content-center">
-              <q-icon name="add" class="absolute text-white text-h5" style="right: 10px; top: 5px"></q-icon>
-              <img :src="element.image" style="width: 100%;">
+            <div style="height: 100%;width: 35%;" :style="`background: url('${ element.image }');background-size: cover;background-position: center;`" class="overflow-hidden row content-center float-left">
+              <q-icon name="info" class="absolute text-white text-h5" color="dark" style="left: 10px; top: 5px; border-radius: 100%" @click.stop="showDetailModal(element)"></q-icon>
             </div>
-            <q-card-section>
-              <div class="text-h6">{{ element.name }}</div>
-            </q-card-section>
-            <div class="text-h6 q-mr-md row justify-between items-center">
-              <q-icon name="info" class="float-left text-h5 q-ml-sm" color="grey-7" @click.stop="showDetailModal(element)"></q-icon>
-              <span class="text-right float-right text-white bg-primary" style="padding: 0 5px 0 5px;border-radius: 10px 10px 0 0;">{{ element.price }} €</span>
+            <div style="width: 65%">
+              <q-card-section class="relative-position full-height">
+                <div class="text-h6 text-bold">{{ element.name }}</div>
+                <div class="text-caption text-dark">{{ element.description }}</div>
+                <div class="row justify-between content-center items-end absolute" style="padding: 0 5px 0 5px;width: calc(100% - 10px);bottom: 0;">
+                  <span class="text-h5 text-bold q-mt-md">{{ element.price.toFixed(2) }} €</span>
+                  <span><q-icon name="arrow_forward" class="text-h6 text-bold bg-primary q-px-lg q-py-sm" style="border-radius: 20px 0 0 0"></q-icon></span>
+                </div>
+              </q-card-section>
             </div>
           </q-card>
         </component>
