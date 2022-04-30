@@ -41,12 +41,19 @@
         <router-view />
       </transition>
     </q-page-container>
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky position="bottom-right" :offset="[18, 18]" v-if="this.$route.name !== 'cart'">
       <router-link :to="{ name: 'cart' }" >
         <q-btn fab icon="shopping_cart" color="primary">
           <div v-if="cartStore.cart.length > 0" style="transform: translateY(-7px);font-weight: 900;">{{ cartStore.cart.length }}</div>
         </q-btn>
       </router-link>
+    </q-page-sticky>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]" v-else>
+      <component
+        :is="cartStore.cart.length === 0 ? 'span' : 'router-link'"
+        :to="{ name: 'buy' }" >
+        <q-btn fab color="primary" :label="'Acheter ' + cartStore.totalCart + ' €'" :disable="cartStore.cart.length === 0"></q-btn>
+      </component>
     </q-page-sticky>
   </q-layout>
 </template>

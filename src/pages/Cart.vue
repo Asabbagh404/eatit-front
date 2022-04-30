@@ -1,15 +1,16 @@
 <template>
   <q-page class="flex flex-center">
-    <h2 class="text-h2">Panier</h2>
+    <h2 class="text-h2 q-mb-none">Panier</h2>
+    <div class="text-h2 text-teal q-mt-md">TOTAL {{ cartStore.totalCart }} €</div>
     <div class="q-pa-md">
       <div class="row">
         <q-card
           class="col-12 q-pr-sm q-mt-lg"
-          v-for="({ name, image, quantity }, index) in cartStore.cart"
+          v-for="({ name, image, quantity, price }, index) in cartStore.cart"
           :key="index"
         >
           <div
-            style="height: 100px"
+            style="height: 150px"
             class="overflow-hidden row content-center"
           >
             <q-icon
@@ -34,6 +35,7 @@
                 <span class="q-mx-md">{{ quantity || 1 }}</span>
                 <q-btn @click="modifyQte(index, true)" icon="add" color="primary" round /></div>
             </div>
+            <span>{{ price * (quantity || 1) }} €</span>
           </q-card-section>
         </q-card>
       </div>
