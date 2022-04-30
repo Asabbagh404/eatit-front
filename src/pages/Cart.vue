@@ -21,15 +21,28 @@
             label="Commentaire"
             class="q-mt-lg"
           />
-          <q-checkbox
-            v-for="(ing, i) in onModifyElement.ingredients"
-            :key="i"
-            :label="i"
-            v-model="onModifyElement.ingredients[i]"
-          >
-          </q-checkbox>
-        </div>
+          <div>
+            <h5 class="q-my-md" v-if="onModifyElement.ingredients">Ingredients</h5>
+            <q-checkbox
+              v-for="(ing, i) in onModifyElement.ingredients"
+              :key="i"
+              :label="i"
+              v-model="onModifyElement.ingredients[i]"
+            >
+            </q-checkbox>
+          </div>
 
+          <div>
+            <h5 class="q-my-md" v-if="onModifyElement.extras">Extras</h5>
+            <q-checkbox
+              v-for="(ing, i) in onModifyElement.extras"
+              :key="i"
+              :label="ing.name"
+              v-model="onModifyElement.extras[i].value"
+            >
+            </q-checkbox>
+          </div>
+        </div>
         <q-card-actions>
           <q-btn
             class="q-my-md q-mx-auto bg-primary text-white"
@@ -68,13 +81,13 @@
           <q-card-section>
             <div class="row justify-between">
               <div class="text-h6">{{ element.name }}</div>
-              <div class="text-h6">
+              <div class="text-h6 bg-grey-4" style="border-radius: 20px">
                 <q-btn @click="modifyQte(index, false)" icon="remove" color="primary" round />
                 <span class="q-mx-md">{{ element.quantity || 1 }}</span>
                 <q-btn @click="modifyQte(index, true)" icon="add" color="primary" round /></div>
             </div>
 <!--            <div class="q-my-sm">{{ element.description }}</div>-->
-            <span>{{ element.price * (element.quantity || 1) }} €</span>
+            <span class="text-h5">{{ element.price * (element.quantity || 1) }} €</span>
             <div v-for="(extra, index) of element.extras" :key="index" class="text-right">
               <q-chip v-if="extra.value" :label="extra.name" color="secondary" class="text-white"></q-chip>
             </div>

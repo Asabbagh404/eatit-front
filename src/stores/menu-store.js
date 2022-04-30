@@ -72,14 +72,35 @@ export const useMenuStore = defineStore('menu', {
           },
           {
             id: 3,
-            name: 'Cheesburger',
+            name: 'Blue cheese',
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10
           },
           {
             id: 4,
-            name: 'Cheesburger',
+            name: 'Tex-mex',
+            image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
+            description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
+            price: 10
+          },
+          {
+            id: 5,
+            name: 'Giant',
+            image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
+            description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
+            price: 10
+          },
+          {
+            id: 6,
+            name: 'Long beef',
+            image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
+            description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
+            price: 10
+          },
+          {
+            id: 7,
+            name: 'CBO',
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10

@@ -17,6 +17,17 @@
         </q-toolbar-title>
         <q-icon name="person" class="text-h4" @click="showLoginModal"></q-icon>
       </q-toolbar>
+      <q-bar style="height: 120px" class="row flex-between items-center no-wrap overflow-auto">
+        <router-link
+          v-for="(category, index) of menuStore.menu"
+          :key="index"
+          :to="{ name: 'items', params: { categoryId: category.id } }"
+          style="min-width: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;"
+        >
+          <div class="overflow-hidden row items-center content-center" style="height: 70px;width: 70px;border-radius: 100%; background-size: cover; background-position: center" :style="`background-image: url(${category.image})`"></div>
+          <div class="supbar-category-text">{{ category.name }}</div>
+        </router-link>
+      </q-bar>
     </q-header>
     <q-drawer
       v-model="leftDrawerOpen"
@@ -63,6 +74,7 @@ import { defineComponent, ref, watch } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { useCartStore } from 'stores/cart-store'
 import { useQuasar } from 'quasar'
+import { useMenuStore } from 'stores/menu-store'
 
 const linksList = [
   {
@@ -107,6 +119,7 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
     const cartStore = useCartStore()
+    const menuStore = useMenuStore()
     watch(cartStore.cart, () => {
       document.querySelector('.btn-shop').classList.add('animate__pulse')
       setTimeout(() => document.querySelector('.btn-shop').classList.remove('animate__pulse'), 2000)
@@ -132,16 +145,23 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       cartStore,
+      menuStore,
       showLoginModal
     }
   }
 })
 </script>
 
-<style>
+<style scoped lang="scss">
 .animate__pulse {
   transition: all ease .2s;
   animation: pulse;
   animation-duration: 1s;
 }
+.router-link-active {
+  .supbar-category-text {
+    opacity: .6;
+  }
+}
+
 </style>
