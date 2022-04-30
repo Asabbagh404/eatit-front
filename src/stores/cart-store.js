@@ -10,6 +10,11 @@ export const useCartStore = defineStore('cart', {
       return this.cart.reduce((tot, curr) => {
         return tot + (curr.price * (curr.quantity || 1))
       }, 0)
+    },
+    totalItemsCart () {
+      return this.cart.reduce((tot, curr) => {
+        return tot + (curr.quantity || 1)
+      }, 0)
     }
   },
   actions: {

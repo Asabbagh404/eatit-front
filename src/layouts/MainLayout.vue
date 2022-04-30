@@ -45,7 +45,7 @@
     <q-page-sticky position="bottom-right" :offset="[18, 18]" v-if="this.$route.name !== 'cart'">
       <router-link :to="{ name: 'cart' }" >
         <q-btn fab icon="shopping_cart" color="primary" class="btn-shop">
-          <div v-if="cartStore.cart.length > 0" style="transform: translateY(-7px);font-weight: 900;">{{ cartStore.cart.length }}</div>
+          <div v-if="cartStore.cart.length > 0" style="transform: translateY(-7px);font-weight: 900;">{{ cartStore.totalItemsCart }}</div>
         </q-btn>
       </router-link>
     </q-page-sticky>
