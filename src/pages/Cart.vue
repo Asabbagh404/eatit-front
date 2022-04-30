@@ -60,7 +60,7 @@
             <q-icon
               @click="modifyElement(element)"
               name="edit"
-              style="top: 5px; left: 35px"
+              style="top: 5px; left: 45px"
               class="absolute text-white text-h4"
             ></q-icon>
             <img :src="element.image" style="width: 100%;">
@@ -73,6 +73,7 @@
                 <span class="q-mx-md">{{ element.quantity || 1 }}</span>
                 <q-btn @click="modifyQte(index, true)" icon="add" color="primary" round /></div>
             </div>
+<!--            <div class="q-my-sm">{{ element.description }}</div>-->
             <span>{{ element.price * (element.quantity || 1) }} €</span>
           </q-card-section>
         </q-card>

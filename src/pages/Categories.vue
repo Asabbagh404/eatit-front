@@ -11,7 +11,7 @@
     <div class="q-pa-md">
       <div class="row">
         <q-card class="col-6 q-pr-sm q-mt-lg" v-for="({ id, name, image }, index) in menuStore.menu" :key="index">
-          <router-link :to="{ path: '/categories/' + id }">
+          <router-link :to="{ name: 'items', params: { categoryId: id } }">
           <div style="height: 100px" class="overflow-hidden row content-center">
             <img :src="image" style="width: 100%;">
           </div>

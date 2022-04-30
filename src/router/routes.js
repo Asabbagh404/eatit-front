@@ -7,7 +7,8 @@ const routes = [
     children: [
       { path: '', redirect: { name: 'categories' } },
       { path: '/categories', component: () => import('pages/Categories.vue'), name: 'categories' },
-      { path: '/categories/:id', component: () => import('pages/Items.vue') },
+      { path: '/categories/:categoryId', component: () => import('pages/Items.vue'), name: 'items' },
+      { path: '/categories/:categoryId/:itemId', component: () => import('pages/Items.vue') },
       { path: '/cart', component: () => import('pages/Cart.vue'), name: 'cart' },
       {
         path: '/buy',
@@ -23,9 +24,6 @@ const routes = [
       }
     ]
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')

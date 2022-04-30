@@ -44,7 +44,7 @@
     </q-page-container>
     <q-page-sticky position="bottom-right" :offset="[18, 18]" v-if="this.$route.name !== 'cart'">
       <router-link :to="{ name: 'cart' }" >
-        <q-btn fab icon="shopping_cart" color="primary">
+        <q-btn fab icon="shopping_cart" color="primary" class="btn-shop">
           <div v-if="cartStore.cart.length > 0" style="transform: translateY(-7px);font-weight: 900;">{{ cartStore.cart.length }}</div>
         </q-btn>
       </router-link>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { useCartStore } from 'stores/cart-store'
 import { useQuasar } from 'quasar'
@@ -108,6 +108,10 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
     const cartStore = useCartStore()
+    watch(cartStore.cart, () => {
+      document.querySelector('.btn-shop').classList.add('animate__pulse')
+      setTimeout(() => document.querySelector('.btn-shop').classList.remove('animate__pulse'), 2000)
+    })
     const $q = useQuasar()
     function showLoginModal () {
       $q.dialog({
@@ -134,3 +138,11 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+.animate__pulse {
+  transition: all ease .2s;
+  animation: pulse;
+  animation-duration: 1s;
+}
+</style>

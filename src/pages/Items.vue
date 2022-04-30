@@ -1,11 +1,11 @@
 <template>
-  <img
-    alt="O'Malo"
-    src="~assets/logo_465x320.png"
-    style="height: 100px"
-    class="q-mx-auto block q-my-md"
-  >
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-center column">
+    <img
+      alt="O'Malo"
+      src="~assets/logo_465x320.png"
+      style="height: 100px"
+      class="q-mx-auto block q-my-md"
+    >
     <h2 class="text-h2 q-my-none">{{ currentCategoriesName }}</h2>
     <div class="q-pa-md">
       <div class="row">
@@ -42,7 +42,7 @@ export default defineComponent({
     const cartStore = useCartStore()
     const route = useRoute()
     const currentCategorie = computed(() => {
-      return menuStore.menu.find(el => +el.id === +route.params.id)
+      return menuStore.menu.find(el => +el.id === +route.params.categoryId)
     })
     const currentCategoriesName = computed(() => {
       return currentCategorie.value.name
