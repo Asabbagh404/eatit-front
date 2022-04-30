@@ -1,12 +1,50 @@
 <template>
-  <q-page class="flex flex-center">
-    <h2 class="text-h2 q-mb-none">Panier</h2>
-    <div class="text-h2 text-teal q-mt-md">TOTAL {{ cartStore.totalCart }} €</div>
+  <q-page class="flex flex-center column">
+    <div>
+      <h2 class="text-h2 q-mb-none text-center">Panier</h2>
+      <div class="text-h3 text-teal q-mt-md block">TOTAL {{ cartStore.totalCart }} €</div>
+    </div>
+    <q-dialog
+      v-model="isOpenModifyModal"
+      stack-buttons
+      prevent-close
+      @cancel="isOpenModifyModal = false"
+    >
+      <q-card class="q-pb-md" style="width: 300px">
+        <q-card-section class="bg-primary text-white q-px-xl">
+          <div class="text-h6">Un&nbsp;commentaire&nbsp;? <br> Ajoute le ici 👍</div>
+        </q-card-section>
+        <div class="q-mx-lg">
+          <q-input
+            v-model="onModifyElement.commentary"
+            type="text"
+            label="Commentaire"
+            class="q-mt-lg"
+          />
+          <q-checkbox
+            v-for="(ing, i) in onModifyElement.ingredients"
+            :key="i"
+            :label="i"
+            v-model="onModifyElement.ingredients[i]"
+          >
+          </q-checkbox>
+        </div>
+
+        <q-card-actions>
+          <q-btn
+            class="q-my-md q-mx-auto bg-primary text-white"
+            style="width: 200px"
+          >
+            Valider
+          </q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <div class="q-pa-md">
       <div class="row">
         <q-card
           class="col-12 q-pr-sm q-mt-lg"
-          v-for="({ name, image, quantity, price }, index) in cartStore.cart"
+          v-for="(element, index) in cartStore.cart"
           :key="index"
         >
           <div
@@ -14,28 +52,28 @@
             class="overflow-hidden row content-center"
           >
             <q-icon
-              @click="deleteElement"
+              @click="deleteElement(index)"
               name="delete"
               style="top: 5px; left: 5px"
-              class="absolute text-red-5 text-h5"
+              class="absolute text-red-5 text-h4"
             ></q-icon>
             <q-icon
-              @click="deleteElement"
+              @click="modifyElement(element)"
               name="edit"
-              style="top: 5px; left: 30px"
-              class="absolute text-white text-h5"
+              style="top: 5px; left: 35px"
+              class="absolute text-white text-h4"
             ></q-icon>
-            <img :src="image" style="width: 100%;">
+            <img :src="element.image" style="width: 100%;">
           </div>
           <q-card-section>
             <div class="row justify-between">
-              <div class="text-h6">{{ name }}</div>
+              <div class="text-h6">{{ element.name }}</div>
               <div class="text-h6">
                 <q-btn @click="modifyQte(index, false)" icon="remove" color="primary" round />
-                <span class="q-mx-md">{{ quantity || 1 }}</span>
+                <span class="q-mx-md">{{ element.quantity || 1 }}</span>
                 <q-btn @click="modifyQte(index, true)" icon="add" color="primary" round /></div>
             </div>
-            <span>{{ price * (quantity || 1) }} €</span>
+            <span>{{ element.price * (element.quantity || 1) }} €</span>
           </q-card-section>
         </q-card>
       </div>
@@ -44,23 +82,33 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useCartStore } from 'stores/cart-store'
 
 export default defineComponent({
   name: 'VItems',
   setup () {
     const cartStore = useCartStore()
+    const onModifyElement = ref(null)
+    const isOpenModifyModal = ref(false)
+
     function modifyQte (index, dir) {
       cartStore.modifyQte(index, dir)
     }
     function deleteElement (index) {
       cartStore.deleteElement(index)
     }
+    function modifyElement (element) {
+      onModifyElement.value = element
+      isOpenModifyModal.value = true
+    }
     return {
       cartStore,
       modifyQte,
-      deleteElement
+      deleteElement,
+      modifyElement,
+      isOpenModifyModal,
+      onModifyElement
     }
   }
 })

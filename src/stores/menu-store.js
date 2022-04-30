@@ -14,16 +14,16 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage'],
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true },
             isMenuable: true
           },
           {
             id: 2,
-            name: 'Cheesburger',
+            name: 'Burger',
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
-            description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
-            price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            description: 'La recette traditionelle du burger au steak fumée.',
+            price: 12,
+            ingredients: { tomate: true, salade: true, steak: true }
           },
           {
             id: 3,
@@ -31,7 +31,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 4,
@@ -39,7 +39,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           }
         ]
       },
@@ -54,7 +54,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 2,
@@ -62,7 +62,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 3,
@@ -70,7 +70,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 4,
@@ -78,7 +78,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           }
         ]
       },
@@ -93,7 +93,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 2,
@@ -101,7 +101,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 3,
@@ -109,7 +109,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 4,
@@ -117,7 +117,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           }
         ]
       },
@@ -132,7 +132,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 2,
@@ -140,7 +140,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 3,
@@ -148,7 +148,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 4,
@@ -156,7 +156,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           }
         ]
       },
@@ -171,7 +171,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 2,
@@ -179,7 +179,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 3,
@@ -187,7 +187,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 4,
@@ -195,7 +195,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           }
         ]
       },
@@ -210,7 +210,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 2,
@@ -218,7 +218,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 3,
@@ -226,7 +226,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           },
           {
             id: 4,
@@ -234,7 +234,7 @@ export const useMenuStore = defineStore('menu', {
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1398&q=80',
             description: 'La recette traditionelle du burger avec du fromage au cheddar et un steak fumée.',
             price: 10,
-            ingredients: ['tomate', 'salade', 'steak', 'fromage']
+            ingredients: { tomate: true, salade: true, steak: true, fromage: true }
           }
         ]
       }
