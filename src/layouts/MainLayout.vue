@@ -44,6 +44,7 @@
       </q-list>
     </q-drawer>
     <q-page-container>
+      <q-icon name="arrow_back" class="text-h4 text-grey-9 q-ma-sm" @click="router.go(-1)"></q-icon>
       <transition
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
@@ -75,6 +76,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 import { useCartStore } from 'stores/cart-store'
 import { useQuasar } from 'quasar'
 import { useMenuStore } from 'stores/menu-store'
+import { useRouter } from 'vue-router'
 
 const linksList = [
   {
@@ -120,6 +122,7 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
     const cartStore = useCartStore()
     const menuStore = useMenuStore()
+    const router = useRouter()
     watch(cartStore.cart, () => {
       document.querySelector('.btn-shop').classList.add('animate__pulse')
       setTimeout(() => document.querySelector('.btn-shop').classList.remove('animate__pulse'), 2000)
@@ -146,7 +149,8 @@ export default defineComponent({
       },
       cartStore,
       menuStore,
-      showLoginModal
+      showLoginModal,
+      router
     }
   }
 })

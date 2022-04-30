@@ -83,11 +83,11 @@
               <div class="text-h6">{{ element.name }}</div>
               <div class="text-h6 bg-grey-4" style="border-radius: 20px">
                 <q-btn @click="modifyQte(index, false)" icon="remove" color="primary" round />
-                <span class="q-mx-md">{{ element.quantity || 1 }}</span>
+                <span class="q-mx-sm">{{ element.quantity || 1 }}</span>
                 <q-btn @click="modifyQte(index, true)" icon="add" color="primary" round /></div>
             </div>
 <!--            <div class="q-my-sm">{{ element.description }}</div>-->
-            <span class="text-h5">{{ (element.price) * (element.quantity || 1) }} €</span>
+            <span class="text-h5">{{ cartStore.elementTotalPrice(element) }} €</span>
             <div v-for="(extra, index) of element.extras" :key="index" class="text-right">
               <q-chip v-if="extra.value" :label="extra.name" color="secondary" class="text-white"></q-chip>
             </div>
@@ -119,21 +119,13 @@ export default defineComponent({
       onModifyElement.value = element
       isOpenModifyModal.value = true
     }
-    function calcTotalExtraprice (element) {
-      if (!element.extras) return element.price
-      return element.extras.reduce((tot, c) => {
-        if (c.value === false) return tot
-        return tot + c.price
-      }, 0)
-    }
     return {
       cartStore,
       modifyQte,
       deleteElement,
       modifyElement,
       isOpenModifyModal,
-      onModifyElement,
-      calcTotalExtraprice
+      onModifyElement
     }
   }
 })
