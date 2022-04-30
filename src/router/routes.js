@@ -17,7 +17,8 @@ const routes = [
         redirect: { name: 'BuyChoose' },
         children: [
           { path: 'choose', name: 'BuyChoose', component: () => import('pages/Buy/BuyChoose.vue') },
-          { path: 'successCommand/:status', name: 'BuySuccessCommand', component: () => import('pages/Buy/BuySuccessCommand.vue') }
+          { path: 'successCommand/:status', name: 'BuySuccessCommand', component: () => import('pages/Buy/BuySuccessCommand.vue') },
+          { path: 'buyCard', name: 'BuyCard', component: () => import('pages/Buy/BuyCard.vue') }
         ]
       }
     ]

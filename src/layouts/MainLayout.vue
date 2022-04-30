@@ -16,6 +16,7 @@
             <img src="~assets/logo_465x320.png" alt="" style="height: 40px" class="block q-my-auto">
           </router-link>
         </q-toolbar-title>
+        <q-icon name="person" class="text-h4" @click="showLoginModal"></q-icon>
       </q-toolbar>
     </q-header>
     <q-drawer
@@ -62,6 +63,7 @@
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { useCartStore } from 'stores/cart-store'
+import { useQuasar } from 'quasar'
 
 const linksList = [
   {
@@ -106,6 +108,19 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
     const cartStore = useCartStore()
+    const $q = useQuasar()
+    function showLoginModal () {
+      $q.dialog({
+        title: 'Alert',
+        message: 'Some message'
+      }).onOk(() => {
+        // console.log('OK')
+      }).onCancel(() => {
+        // console.log('Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    }
 
     return {
       essentialLinks: linksList,
@@ -113,7 +128,8 @@ export default defineComponent({
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
-      cartStore
+      cartStore,
+      showLoginModal
     }
   }
 })
