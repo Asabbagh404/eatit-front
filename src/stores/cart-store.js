@@ -1,5 +1,12 @@
 import { defineStore } from 'pinia'
 
+function totalExtraPrice (curr) {
+  return curr.extras.reduce((tot, c) => {
+    if (c.value === false) return tot
+    return tot + c.price
+  }, 0)
+}
+
 export const useCartStore = defineStore('cart', {
   state: () => ({
     cart: [],
@@ -8,7 +15,7 @@ export const useCartStore = defineStore('cart', {
   getters: {
     totalCart () {
       return this.cart.reduce((tot, curr) => {
-        return tot + (curr.price * (curr.quantity || 1))
+        return tot + (curr.price + totalExtraPrice(curr) * (curr.quantity || 1))
       }, 0)
     },
     totalItemsCart () {
