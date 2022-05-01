@@ -47,7 +47,7 @@
       <div style="height: 150px"></div>
       <div class="bg-dark fixed-bottom" style="bottom: 0; left: 0;border-radius: 20px 20px 0 0">
         <div class="text-h5 text-white q-py-sm q-mx-md text-bold" style="border-bottom: solid white 0.5px;">Total <span class="float-right">{{ sumTotal }} €</span></div>
-        <q-btn class="text-body1 text-black bg-primary q-py-md q-mx-auto q-mt-md row q-my-sm" style="width: 300px; text-transform: none; border-radius: 30px" @click="addToCart">Ajouter à la commande</q-btn>
+        <ButtonLong color="primary" @click="addToCart" >Ajouter à la commande</ButtonLong>
       </div>
     </div>
   </div>
@@ -58,8 +58,12 @@ import { computed, defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMenuStore } from 'stores/menu-store'
 import { useCartStore } from 'stores/cart-store'
+import ButtonLong from 'components/menu/ButtonLong.vue'
 
 export default defineComponent({
+  components: {
+    ButtonLong
+  },
   setup () {
     const
       cartStore = useCartStore(),

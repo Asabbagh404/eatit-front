@@ -1,8 +1,12 @@
 <template>
-  <q-layout view="lHh Lpr lFf" class="q-mb-xl">
+  <q-layout view="lHh Lpr lFf">
     <q-header elevated>
+      <VUserModal
+        v-model="showLoginOrProfilModal"
+      />
       <q-toolbar>
         <q-btn
+          v-if="!envStore.isTablet"
           flat
           dense
           round
@@ -15,7 +19,7 @@
             <img src="~assets/logo_465x320.png" alt="" style="height: 40px" class="block q-my-auto">
           </router-link>
         </q-toolbar-title>
-        <q-icon name="person" class="text-h4" @click="showLoginModal"></q-icon>
+        <q-icon name="person" class="text-h4" @click="showLoginOrProfil" v-if="!envStore.isTablet"></q-icon>
       </q-toolbar>
       <q-bar style="height: 120px" class="row flex-between items-center no-wrap overflow-auto">
         <router-link
@@ -25,7 +29,7 @@
           style="min-width: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;"
         >
           <div class="overflow-hidden row items-center content-center supbar-image-cat" style="height: 70px;width: 70px;border-radius: 100%; background-size: cover; background-position: center" :style="`background-image: url(${category.image})`"></div>
-          <div class="supbar-category-text">{{ category.name }}</div>
+          <div class="supbar-category-text text-center">{{ category.name }}</div>
         </router-link>
       </q-bar>
     </q-header>
@@ -55,8 +59,8 @@
     </q-page-container>
     <q-page-sticky position="bottom-right" :offset="[18, 18]" v-if="this.$route.name !== 'cart'">
       <router-link :to="{ name: 'cart' }" >
-        <q-btn fab icon="shopping_cart" color="primary" class="btn-shop">
-          <div v-if="cartStore.cart.length > 0" style="transform: translateY(-7px);font-weight: 900;">{{ cartStore.totalItemsCart }}</div>
+        <q-btn fab icon="shopping_cart" color="secondary" class="btn-shop">
+          <div v-if="cartStore.cart.length > 0" class="font-bold" style="transform: translateY(-7px);">{{ cartStore.totalItemsCart }}</div>
         </q-btn>
       </router-link>
     </q-page-sticky>
@@ -73,9 +77,12 @@
 <script>
 import { defineComponent, ref, watch } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import VUserModal from 'components/menu/VUserModal.vue'
+
 import { useCartStore } from 'stores/cart-store'
-import { useQuasar } from 'quasar'
 import { useMenuStore } from 'stores/menu-store'
+import { useEnvStore } from 'stores/env-store'
+
 import { useRouter } from 'vue-router'
 
 const linksList = [
@@ -115,32 +122,23 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    EssentialLink,
+    VUserModal
   },
-
   setup () {
     const leftDrawerOpen = ref(false)
     const cartStore = useCartStore()
     const menuStore = useMenuStore()
+    const envStore = useEnvStore()
     const router = useRouter()
+    const showLoginOrProfilModal = ref(false)
     watch(cartStore.cart, () => {
       document.querySelector('.btn-shop').classList.add('animate__pulse')
       setTimeout(() => document.querySelector('.btn-shop').classList.remove('animate__pulse'), 2000)
     })
-    const $q = useQuasar()
-    function showLoginModal () {
-      $q.dialog({
-        title: 'Alert',
-        message: 'Some message'
-      }).onOk(() => {
-        // console.log('OK')
-      }).onCancel(() => {
-        // console.log('Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
+    function showLoginOrProfil () {
+      showLoginOrProfilModal.value = true
     }
-
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
@@ -149,8 +147,10 @@ export default defineComponent({
       },
       cartStore,
       menuStore,
-      showLoginModal,
-      router
+      router,
+      envStore,
+      showLoginOrProfil,
+      showLoginOrProfilModal
     }
   }
 })

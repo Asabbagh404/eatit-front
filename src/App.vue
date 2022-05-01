@@ -10,13 +10,16 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
+import { useEnvStore } from 'stores/env-store'
 
 export default defineComponent({
   name: 'App',
-  mounted () {
-    // document.documentElement.style.setProperty('--q-primary', 'red')
-    // document.documentElement.style.setProperty('--q-dark', 'blue')
+  setup () {
+    const envStore = useEnvStore()
+    onMounted(() => {
+      envStore.setEnv()
+    })
   }
 })
 </script>

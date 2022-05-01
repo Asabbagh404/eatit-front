@@ -2,14 +2,22 @@
 
 const routes = [
   {
-    path: '/',
+    path: '',
+    component: () => import('layouts/NoLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Home.vue'), name: 'VHome', beforeEnter: isTablet }
+    ]
+  },
+  {
+    path: '/categories',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', redirect: { name: 'categories' } },
-      { path: '/categories', component: () => import('pages/Categories.vue'), name: 'categories' },
-      { path: '/categories/:categoryId', component: () => import('pages/Items.vue'), name: 'items' },
-      { path: '/categories/:categoryId/:itemId', component: () => import('pages/SingleItem.vue'), name: 'singleItem' },
+      { path: '/', component: () => import('pages/Categories.vue'), name: 'categories' },
+      { path: '/:categoryId', component: () => import('pages/Items.vue'), name: 'items' },
+      { path: '/:categoryId/:itemId', component: () => import('pages/SingleItem.vue'), name: 'singleItem' },
       { path: '/cart', component: () => import('pages/Cart.vue'), name: 'cart' },
+      { path: '/signin', component: () => import('pages/Login/Signin.vue'), name: 'signin' },
+      { path: '/signup', component: () => import('pages/Login/Signup.vue'), name: 'signup' },
       {
         path: '/buy',
         component: () => import('pages/Buy/Index.vue'),
@@ -34,6 +42,10 @@ function isCartEmpty () {
   return true
   // const cartStore = useCartStore()
   // return cartStore.cart.length > 0
+}
+
+function isTablet () {
+  if (!localStorage.isTablet) return { name: 'categories' }
 }
 
 export default routes

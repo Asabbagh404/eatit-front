@@ -18,7 +18,7 @@
         </p>
       </q-card>
     </q-dialog>
-    <h2 class="text-title text-bold q-my-none">{{ currentCategoriesName }}</h2>
+    <h2 class="text-title text-bold q-my-none flex items-center items-category-name">{{ currentCategoriesName }}</h2>
     <div class="q-pt-none q-px-md">
       <div class="row">
         <component
@@ -119,3 +119,17 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped lang="scss">
+.items-category-name:after {
+  content: '';
+  max-width: 200px;
+  min-width: 200px;
+  display: block;
+  height: 1px;
+  background: #d8d8e8;
+  float: right;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+</style>
