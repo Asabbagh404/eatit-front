@@ -1,7 +1,7 @@
 <template>
   <div>
     <div  class="relative-position" :style="`background-image: url(${ itemCopy.image })`" style="height: 300px;background-size: cover;background-position: center;">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute;bottom: 0;width: 100vw" viewBox="0 0 375 68">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute;bottom: -1px;width: 100vw" viewBox="0 0 375 68">
         <defs>
           <clipPath id="clip-path">
             <rect id="Rectangle_284" data-name="Rectangle 284" width="375" height="68" transform="translate(3943 1930)" fill="#fff" stroke="#707070" stroke-width="1"/>
@@ -14,10 +14,10 @@
     </div>
 
     <div class="bg-white q-px-md">
-      <h5 class="q-my-none text-bold" style="font-size: 30px">{{ itemCopy.name }}</h5>
+      <h5 class="q-my-none text-bold text-title">{{ itemCopy.name }}</h5>
       <p class="q-mt-md text-caption text-grey-8">{{ itemCopy.description }}</p>
       <div style="border-top: solid 1px grey">
-        <p class="q-mt-lg q-mb-none text-h5 text-bold" style="font-size: 20px">Ingredients</p>
+        <p class="q-mt-lg q-mb-none text-bold text-subtitle">Ingredients</p>
         <div>
           <q-checkbox
             v-for="(ing, i) in itemCopy.ingredients"
@@ -34,7 +34,7 @@
 
       </div>
       <div>
-        <p class="q-mt-lg q-mb-none text-h5 text-bold" style="font-size: 20px">Extras</p>
+        <p class="q-mt-lg q-mb-none text-bold text-subtitle" style="font-size: 20px">Extras</p>
         <q-checkbox
           v-for="(el, index) of itemCopy.extras" :label="el.name" v-model="el.value" :key="index"
           class="q-py-md"
@@ -111,5 +111,10 @@ export default defineComponent({
 
 /deep/ .q-checkbox__bg {
   border-radius: 100%;
+}
+
+/deep/ .q-checkbox {
+  font-weight: bold;
+  color: #616161 ;
 }
 </style>

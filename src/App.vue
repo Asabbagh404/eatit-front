@@ -13,6 +13,10 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  mounted () {
+    // document.documentElement.style.setProperty('--q-primary', 'red')
+    // document.documentElement.style.setProperty('--q-dark', 'blue')
+  }
 })
 </script>
