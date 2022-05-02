@@ -64,13 +64,6 @@
         </q-btn>
       </router-link>
     </q-page-sticky>
-    <q-page-sticky position="bottom-right" :offset="[18, 18]" v-else>
-      <component
-        :is="cartStore.cart.length === 0 ? 'span' : 'router-link'"
-        :to="{ name: 'buy' }" >
-        <q-btn  class="btn-shop" fab color="primary" :label="'Acheter ' + cartStore.totalCart + ' €'" :disable="cartStore.cart.length === 0"></q-btn>
-      </component>
-    </q-page-sticky>
   </q-layout>
 </template>
 
@@ -133,8 +126,10 @@ export default defineComponent({
     const router = useRouter()
     const showLoginOrProfilModal = ref(false)
     watch(cartStore.cart, () => {
-      document.querySelector('.btn-shop').classList.add('animate__pulse')
-      setTimeout(() => document.querySelector('.btn-shop').classList.remove('animate__pulse'), 2000)
+      const btnShop = document.querySelector('.btn-shop')
+      if (!btnShop) return
+      btnShop.classList.add('animate__pulse')
+      setTimeout(() => btnShop.classList.remove('animate__pulse'), 2000)
     })
     function showLoginOrProfil () {
       showLoginOrProfilModal.value = true

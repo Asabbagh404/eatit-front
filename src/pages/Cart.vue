@@ -1,8 +1,7 @@
 <template>
   <q-page class="flex flex-center column">
     <div>
-      <h2 class="text-h2 q-mb-none text-center">Panier</h2>
-      <div class="text-h3 text-teal q-mt-md block">TOTAL {{ cartStore.totalCart }} €</div>
+      <h2 class="text-title q-mb-none text-center text-bold">Panier</h2>
     </div>
     <q-dialog
       v-model="isOpenModifyModal"
@@ -56,7 +55,7 @@
     <div class="q-pa-md">
       <div class="row">
         <q-card
-          class="col-12 q-pr-sm q-mt-lg"
+          class="col-12 q-pr-sm q-mt-lg shadow-custom-1"
           v-for="(element, index) in cartStore.cart"
           :key="index"
         >
@@ -95,15 +94,26 @@
         </q-card>
       </div>
     </div>
+    <BottomTotal :total="cartStore.totalCart" :disable="cartStore.cart.length === 0">
+      <component
+      :is="cartStore.cart.length === 0 ? 'span' : 'router-link'"
+      :to="{ name: 'buy' }" >
+        Valider la commande
+      </component>
+    </BottomTotal>
   </q-page>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
 import { useCartStore } from 'stores/cart-store'
+import BottomTotal from './../components/menu/BottomTotal.vue'
 
 export default defineComponent({
   name: 'VCart',
+  components: {
+    BottomTotal
+  },
   setup () {
     const cartStore = useCartStore()
     const onModifyElement = ref(null)

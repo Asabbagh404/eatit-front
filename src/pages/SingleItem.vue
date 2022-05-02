@@ -44,11 +44,7 @@
         >
         </q-checkbox>
       </div>
-      <div style="height: 150px"></div>
-      <div class="bg-dark fixed-bottom" style="bottom: 0; left: 0;border-radius: 20px 20px 0 0">
-        <div class="text-h5 text-white q-py-sm q-mx-md text-bold" style="border-bottom: solid white 0.5px;">Total <span class="float-right">{{ sumTotal }} €</span></div>
-        <ButtonLong color="primary" @click="addToCart" >Ajouter à la commande</ButtonLong>
-      </div>
+      <BottomTotal @btnClick="addToCart" :total="sumTotal">Ajouter à la commande</BottomTotal>
     </div>
   </div>
 </template>
@@ -58,11 +54,11 @@ import { computed, defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMenuStore } from 'stores/menu-store'
 import { useCartStore } from 'stores/cart-store'
-import ButtonLong from 'components/menu/ButtonLong.vue'
+import BottomTotal from 'components/menu/BottomTotal.vue'
 
 export default defineComponent({
   components: {
-    ButtonLong
+    BottomTotal
   },
   setup () {
     const
