@@ -60,3 +60,27 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+/deep/ .q-checkbox {
+  display: flex;
+  justify-content: space-between;
+}
+
+/deep/ .q-checkbox__inner {
+  order: 2
+}
+
+/deep/ .q-checkbox__label {
+  text-transform: capitalize;
+}
+
+/deep/ .q-checkbox__bg {
+  border-radius: 100%;
+}
+
+/deep/ .q-checkbox {
+  font-weight: bold;
+  color: #616161 ;
+}
+</style>

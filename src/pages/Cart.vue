@@ -20,29 +20,8 @@
             label="Commentaire"
             class="q-mt-lg"
           />
-          <div>
-            <h5 class="q-my-md" v-if="onModifyElement.ingredients">Ingredients</h5>
-            <q-checkbox
-              v-for="(ing, i) in onModifyElement.ingredients"
-              :key="i"
-              :label="i"
-              v-model="onModifyElement.ingredients[i]"
-            >
-            </q-checkbox>
-          </div>
-
-          <div>
-            <h5 class="q-my-md" v-if="onModifyElement.extras">Extras</h5>
-            <q-checkbox
-              v-for="(ing, i) in onModifyElement.extras"
-              :key="i"
-              :label="ing.name"
-              v-model="onModifyElement.extras[i].value"
-            >
-            </q-checkbox>
-          </div>
-        </div>
-        <q-card-actions>
+          <ComplementSelector v-model="onModifyElement" v-model:errors="errors" @update:errors="updateErrors"></ComplementSelector>
+          <q-card-actions>
           <q-btn
             class="q-my-md q-mx-auto bg-primary text-white"
             style="width: 200px"
@@ -50,6 +29,7 @@
             Valider
           </q-btn>
         </q-card-actions>
+        </div>
       </q-card>
     </q-dialog>
     <div class="q-pa-md full-width">
@@ -103,6 +83,7 @@
 import { defineComponent, ref } from 'vue'
 import { useCartStore } from 'stores/cart-store'
 import BottomTotal from './../components/menu/BottomTotal.vue'
+import ComplementSelector from 'components/menu/ComplementSelector.vue'
 import IconCardRight from 'components/IconCardRight.vue'
 import { splitDecimal } from 'src/mixins/splitDecimal'
 import { textAbstract } from '../mixins/textAbstract'
@@ -111,13 +92,18 @@ export default defineComponent({
   name: 'VCart',
   components: {
     BottomTotal,
-    IconCardRight
+    IconCardRight,
+    ComplementSelector
   },
   setup () {
     const cartStore = useCartStore()
     const onModifyElement = ref(null)
     const isOpenModifyModal = ref(false)
+    const errors = ref(null)
 
+    function updateErrors (val) {
+      errors.value = (val || {})
+    }
     function modifyQte (index, dir) {
       cartStore.modifyQte(index, dir)
     }
@@ -128,6 +114,10 @@ export default defineComponent({
       onModifyElement.value = element
       isOpenModifyModal.value = true
     }
+    function showDetailModal (element) {
+      isOpenModifyModal.value = true
+      onModifyElement.value = element
+    }
     return {
       cartStore,
       modifyQte,
@@ -136,7 +126,10 @@ export default defineComponent({
       isOpenModifyModal,
       onModifyElement,
       splitDecimal,
-      textAbstract
+      textAbstract,
+      errors,
+      updateErrors,
+      showDetailModal
     }
   }
 })
