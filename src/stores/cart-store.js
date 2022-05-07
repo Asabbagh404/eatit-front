@@ -8,22 +8,20 @@ export const useCartStore = defineStore('cart', {
   getters: {
     totalCart () {
       return (this.cart.reduce((tot, curr) => {
-        return tot + (curr.price * (curr.quantity || 1))
+        return tot + (curr.priceTaxed * (curr.quantity || 1))
       }, 0)).toFixed(2)
     },
     elementTotalPrice () {
       return (element) => {
-        console.log(element.price, this.totalExtraPrice(element))
-        return (element.price + this.totalExtraPrice(element)) * (element.quantity || 1)
+        return (element.priceTaxed + this.totalExtraPrice(element)) * (element.quantity || 1)
       }
     },
     totalExtraPrice () {
       return (element) => {
-        console.log('extras: ', element)
         if (!element.extras) return 0
         return element.extras.reduce((tot, c) => {
           if (!c.value) return tot
-          return tot + c.price
+          return tot + c.priceTaxed
         }, 0)
       }
     },

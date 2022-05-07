@@ -16,40 +16,25 @@
       <h5 class="q-my-none text-bold text-title">{{ itemCopy.name }}</h5>
       <p class="q-mt-md text-caption text-grey-8">{{ itemCopy.description }}</p>
       <div style="border-top: solid 1px grey">
-        <template v-for="(complement, index) of itemCopy.complements" :key="index">
-          <p class="q-mt-lg q-mb-none text-bold text-subtitle">{{ complement.name }}</p>
-          <p class="text-caption text-grey-8"><template v-if="+complement.maximumn !== +complement.complementLines.length">Max: {{ complement.maximumn }}</template><template v-if="complement.minimum !== 0">| Min: {{ complement.minimum }}</template></p>
-          <div v-for="(complementLine, ci) of complement.complementLines"
-               :key="ci">
-            <q-checkbox
-              :label="complementLine.name + (complementLine.price !== 0 ? ' ' + complementLine.price + '€' : '')"
-              v-model="itemCopy.complements[index].complementLines[ci].isChecked"
-              @click="$forceUpdate()"
-              class="q-py-md"
-              style="border-bottom: solid 1px gray"
-              checked-icon="radio_button_checked"
-              unchecked-icon="radio_button_unchecked"
-            >
-            </q-checkbox>
-          </div>
-          <span  class="text-red">{{ checkErrors(complement) }}</span>
-        </template>
+        <ComplementSelector v-model="itemCopy" v-model:errors="errors" @update:errors="updateErrors"></ComplementSelector>
       </div>
-      <BottomTotal @btnClick="addToCart" :total="sumTotal" :disable="noErrors.length !== 0">Ajouter à la commande</BottomTotal>
+      <BottomTotal @btnClick="addToCart" :total="sumTotal" :disable="!noErrors">Ajouter à la commande</BottomTotal>
     </div>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent, reactive } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useRestaurantStore } from 'stores/restaurant-store'
 import { useCartStore } from 'stores/cart-store'
 import BottomTotal from 'components/menu/BottomTotal.vue'
+import ComplementSelector from 'components/menu/ComplementSelector.vue'
 
 export default defineComponent({
   components: {
-    BottomTotal
+    BottomTotal,
+    ComplementSelector
   },
   setup () {
     const
@@ -82,15 +67,18 @@ export default defineComponent({
           if (!curr.value) return tot
           return tot + (curr.complementLines.reduce((clTot, clCurr) => {
             if (!clCurr) return clTot
-            return clTot + clCurr.price
+            return clTot + clCurr.priceTaxed
           }))
         }, 0)
-        return itemCopy.value.price + totalExtra
+        return itemCopy.value.priceTaxed + totalExtra
       }),
-      errors = reactive({}),
+      errors = ref({}),
       noErrors = computed(() => {
-        return Object.entries(errors)
+        return Object.keys(errors.value).length === 0
       })
+    function updateErrors (val) {
+      errors.value = (val || {})
+    }
     function checkErrors (complement) {
       return [checkMax(complement)].join('\n')
     }
@@ -116,7 +104,8 @@ export default defineComponent({
       restaurantStore,
       checkErrors,
       errors,
-      noErrors
+      noErrors,
+      updateErrors
     }
   }
 })

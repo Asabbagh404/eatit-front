@@ -14,6 +14,7 @@ export default defineComponent({
   components: {
     ButtonLong
   },
+  emits: ['btnClick'],
   props: {
     total: {
       type: Number,
