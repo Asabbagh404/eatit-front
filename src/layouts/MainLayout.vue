@@ -48,7 +48,7 @@
       </q-list>
     </q-drawer>
     <q-page-container>
-      <q-icon name="arrow_back" class="text-h5 q-pa-sm text-dark q-ma-sm fixed bg-primary shadow-3" style="position: fixed;top: 175px;z-index: 999;border-radius: 100%" @click="router.go(-1)"></q-icon>
+      <q-icon name="arrow_back" class="text-h5 q-pa-sm text-dark q-ma-sm fixed bg-primary shadow-custom-1" style="position: fixed;top: 175px;z-index: 999;border-radius: 100%" @click="router.go(-1)"></q-icon>
       <transition
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
