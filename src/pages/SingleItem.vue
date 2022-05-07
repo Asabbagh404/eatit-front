@@ -16,7 +16,7 @@
       <h5 class="q-my-none text-bold text-title">{{ itemCopy.name }}</h5>
       <p class="q-mt-md text-caption text-grey-8">{{ itemCopy.description }}</p>
       <div style="border-top: solid 1px grey">
-        <ComplementSelector v-model="itemCopy" v-model:errors="errors" @update:errors="updateErrors"></ComplementSelector>
+        <ComplementSelector v-model="itemCopy" :errors="errors"></ComplementSelector>
       </div>
       <BottomTotal @btnClick="addToCart" :total="sumTotal" :disable="!noErrors">Ajouter à la commande</BottomTotal>
     </div>
