@@ -69,7 +69,7 @@
         </q-card>
       </div>
     </div>
-    <BottomTotal :total="+cartStore.totalCart" :disable="disable" :expanded="isExpandedBottomTotal">
+    <BottomTotal :total="+cartStore.totalCart" :disable="disable" :expanded="isExpandedBottomTotal" @btnClick="toggleExpand">
       <template v-slot:expanded-content>
         <router-link :to="{ name: 'BuyCard' }">
           <ButtonLong color="primary" icon="smartphone" text-color="white" size="lg" width="90%">Paiement en ligne</ButtonLong>
@@ -82,7 +82,7 @@
         :is="isTabletAndNotEmpty ? 'router-link' : 'span'"
         :to="{ name: 'BuySuccessCommand', params: { status: 'unPaid'} }"
       >
-        <div @click="toggleExpand">{{ isExpandedBottomTotal ? 'Fermer le contenu' : 'Valider la commande' }}</div>
+        <div >{{ isExpandedBottomTotal ? 'Fermer le contenu' : 'Valider la commande' }}</div>
       </component>
 
     </BottomTotal>
