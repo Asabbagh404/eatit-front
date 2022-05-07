@@ -78,7 +78,13 @@
           <ButtonLong color="primary" icon="wallet" text-color="white" size="lg" width="90%">Paiement au comptoire</ButtonLong>
         </router-link>
       </template>
-      <div @click="toggleExpand">{{ isExpandedBottomTotal ? 'Fermer le contenu' : 'Valider la commande' }}</div>
+      <component
+        :is="isTabletAndNotEmpty ? 'router-link' : 'span'"
+        :to="{ name: 'BuySuccessCommand', params: { status: 'unPaid'} }"
+      >
+        <div @click="toggleExpand">{{ isExpandedBottomTotal ? 'Fermer le contenu' : 'Valider la commande' }}</div>
+      </component>
+
     </BottomTotal>
   </q-page>
 </template>
@@ -109,6 +115,9 @@ export default defineComponent({
     const errors = ref(null)
     const disable = computed(() => {
       return cartStore.cart.length === 0
+    })
+    const isTabletAndNotEmpty = computed(() => {
+      return localStorage.isTablet && !disable.value
     })
     function updateErrors (val) {
       errors.value = (val || {})
@@ -145,7 +154,8 @@ export default defineComponent({
       showDetailModal,
       isExpandedBottomTotal,
       toggleExpand,
-      disable
+      disable,
+      isTabletAndNotEmpty
     }
   }
 })
