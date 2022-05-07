@@ -9,7 +9,7 @@
       control-color="white"
       padding
       arrows
-      height="300px"
+      height="30vh"
       class="bg-primary text-white rounded-borders"
     >
       <q-carousel-slide name="style" class="column no-wrap flex-center" img-src="~assets/slider/1.jpg">

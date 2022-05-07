@@ -12,7 +12,7 @@ export const useEnvStore = defineStore('env', {
       this.isTablet = !!localStorage.isTablet
     },
     setConnection () {
-      this.isConnected = !!localStorage.isTablet
+      this.isConnected = true
     },
     setEnv () {
       this.setIsTablet()

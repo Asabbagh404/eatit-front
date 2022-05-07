@@ -21,15 +21,15 @@
         </q-toolbar-title>
         <q-icon name="person" class="text-h4" @click="showLoginOrProfil" v-if="!envStore.isTablet"></q-icon>
       </q-toolbar>
-      <q-bar style="height: 120px" class="row flex-between items-center no-wrap overflow-auto">
+      <q-bar style="height: 120px" class="row flex-between items-center no-wrap overflow-auto overflow-hidden-y">
         <router-link
           v-for="(category, index) of menuStore.menu"
           :key="index"
-          :to="{ name: 'items', params: { categoryId: category.id } }"
+          :to="{ name: 'items', params: { categoryId: category.uuid } }"
           style="min-width: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;"
         >
           <div class="overflow-hidden row items-center content-center supbar-image-cat" style="height: 70px;width: 70px;border-radius: 100%; background-size: cover; background-position: center" :style="`background-image: url(${category.image})`"></div>
-          <div class="supbar-category-text text-center">{{ category.name }}</div>
+          <div class="supbar-category-text text-center">{{ shortContent(category.name) }}</div>
         </router-link>
       </q-bar>
     </q-header>
@@ -73,7 +73,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 import VUserModal from 'components/menu/VUserModal.vue'
 
 import { useCartStore } from 'stores/cart-store'
-import { useMenuStore } from 'stores/menu-store'
+import { useRestaurantStore } from 'stores/restaurant-store'
 import { useEnvStore } from 'stores/env-store'
 
 import { useRouter } from 'vue-router'
@@ -121,7 +121,7 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
     const cartStore = useCartStore()
-    const menuStore = useMenuStore()
+    const menuStore = useRestaurantStore()
     const envStore = useEnvStore()
     const router = useRouter()
     const showLoginOrProfilModal = ref(false)
@@ -134,6 +134,9 @@ export default defineComponent({
     function showLoginOrProfil () {
       showLoginOrProfilModal.value = true
     }
+    function shortContent (str) {
+      return '' + str.substr(0, 15)
+    }
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
@@ -145,7 +148,8 @@ export default defineComponent({
       router,
       envStore,
       showLoginOrProfil,
-      showLoginOrProfilModal
+      showLoginOrProfilModal,
+      shortContent
     }
   }
 })

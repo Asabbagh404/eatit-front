@@ -12,14 +12,21 @@
 <script>
 import { defineComponent, onMounted } from 'vue'
 import { useEnvStore } from 'stores/env-store'
-
+import { useRestaurantStore } from 'stores/restaurant-store'
 export default defineComponent({
   name: 'App',
   setup () {
+    const restaurantStore = useRestaurantStore()
     const envStore = useEnvStore()
+
     onMounted(() => {
       envStore.setEnv()
+      restaurantStore.getRestaurant()
+      restaurantStore.getMenu()
     })
+    return {
+      restaurantStore
+    }
   }
 })
 </script>

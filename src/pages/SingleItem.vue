@@ -12,47 +12,38 @@
         </g>
       </svg>
     </div>
-
     <div class="bg-white q-px-md">
       <h5 class="q-my-none text-bold text-title">{{ itemCopy.name }}</h5>
       <p class="q-mt-md text-caption text-grey-8">{{ itemCopy.description }}</p>
       <div style="border-top: solid 1px grey">
-        <p class="q-mt-lg q-mb-none text-bold text-subtitle">Ingredients</p>
-        <div>
-          <q-checkbox
-            v-for="(ing, i) in itemCopy.ingredients"
-            :key="i"
-            :label="i"
-            v-model="itemCopy.ingredients[i]"
-            class="q-py-md"
-            style="border-bottom: solid 1px gray"
-            checked-icon="radio_button_checked"
-            unchecked-icon="radio_button_unchecked"
-          >
-          </q-checkbox>
-        </div>
-
+        <template v-for="(complement, index) of itemCopy.complements" :key="index">
+          <p class="q-mt-lg q-mb-none text-bold text-subtitle">{{ complement.name }}</p>
+          <p class="text-caption text-grey-8"><template v-if="+complement.maximumn !== +complement.complementLines.length">Max: {{ complement.maximumn }}</template><template v-if="complement.minimum !== 0">| Min: {{ complement.minimum }}</template></p>
+          <div v-for="(complementLine, ci) of complement.complementLines"
+               :key="ci">
+            <q-checkbox
+              :label="complementLine.name + (complementLine.price !== 0 ? ' ' + complementLine.price + '€' : '')"
+              v-model="itemCopy.complements[index].complementLines[ci].isChecked"
+              @click="$forceUpdate()"
+              class="q-py-md"
+              style="border-bottom: solid 1px gray"
+              checked-icon="radio_button_checked"
+              unchecked-icon="radio_button_unchecked"
+            >
+            </q-checkbox>
+          </div>
+          <span  class="text-red">{{ checkErrors(complement) }}</span>
+        </template>
       </div>
-      <div>
-        <p class="q-mt-lg q-mb-none text-bold text-subtitle" style="font-size: 20px">Extras</p>
-        <q-checkbox
-          v-for="(el, index) of itemCopy.extras" :label="el.name" v-model="el.value" :key="index"
-          class="q-py-md"
-          style="border-bottom: solid 1px gray"
-          checked-icon="radio_button_checked"
-          unchecked-icon="radio_button_unchecked"
-        >
-        </q-checkbox>
-      </div>
-      <BottomTotal @btnClick="addToCart" :total="sumTotal">Ajouter à la commande</BottomTotal>
+      <BottomTotal @btnClick="addToCart" :total="sumTotal" :disable="noErrors.length !== 0">Ajouter à la commande</BottomTotal>
     </div>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useMenuStore } from 'stores/menu-store'
+import { useRestaurantStore } from 'stores/restaurant-store'
 import { useCartStore } from 'stores/cart-store'
 import BottomTotal from 'components/menu/BottomTotal.vue'
 
@@ -63,23 +54,55 @@ export default defineComponent({
   setup () {
     const
       cartStore = useCartStore(),
-      menuStore = useMenuStore(),
+      restaurantStore = useRestaurantStore(),
       route = useRoute(),
       router = useRouter(),
       itemId = route.params.itemId,
       categoryId = route.params.categoryId,
-      category = ref(menuStore.menu.find(el => +el.id === +categoryId)),
-      item = ref(category.value.elements.find((el) => {
-        return +el.id === +itemId
-      })),
-      itemCopy = ref(JSON.parse(JSON.stringify(item.value))),
+      item = computed(() => {
+        if (!restaurantStore.menu) return []
+        const category = restaurantStore.menu.find((el) => {
+          return el.uuid === categoryId
+        })
+        return category.items.find((item) => item.uuid === itemId)
+      }),
+      itemCopy = computed(() => {
+        if (item.value.length === 0) return []
+        const copy = JSON.parse(JSON.stringify(item.value))
+        copy.complements.forEach(complement => {
+          complement.complementLines.forEach((line) => {
+            line.isChecked = !!(line.isChecked)
+          })
+        })
+        return copy
+      }),
       sumTotal = computed(() => {
-        const totalExtra = itemCopy.value.extras.reduce((tot, curr) => {
+        if (itemCopy.value.length === 0) return 0
+        const totalExtra = itemCopy.value.complements.reduce((tot, curr) => {
           if (!curr.value) return tot
-          return tot + curr.price
+          return tot + (curr.complementLines.reduce((clTot, clCurr) => {
+            if (!clCurr) return clTot
+            return clTot + clCurr.price
+          }))
         }, 0)
-        return item.value.price + totalExtra
+        return itemCopy.value.price + totalExtra
+      }),
+      errors = reactive({}),
+      noErrors = computed(() => {
+        return Object.entries(errors)
       })
+    function checkErrors (complement) {
+      return [checkMax(complement)].join('\n')
+    }
+    function checkMax (complement) {
+      const isBelow = complement.complementLines.length > complement.complementLines.filter((line) => line.isChecked).length
+      if (!isBelow) {
+        errors[complement.uuid] = { name: complement.name, error: 'isAbove' }
+      } else {
+        delete errors[complement.uuid]
+      }
+      return isBelow ? '' : `Vous ne pouvez pas choisir plus de ${complement.maximumn} elements`
+    }
     function addToCart () {
       cartStore.addToCart(itemCopy.value)
       router.push('/')
@@ -89,7 +112,11 @@ export default defineComponent({
       item,
       sumTotal,
       addToCart,
-      itemCopy
+      itemCopy,
+      restaurantStore,
+      checkErrors,
+      errors,
+      noErrors
     }
   }
 })
