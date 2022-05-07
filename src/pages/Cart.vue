@@ -69,20 +69,25 @@
         </q-card>
       </div>
     </div>
-    <BottomTotal :total="cartStore.totalCart" :disable="cartStore.cart.length === 0">
-      <component
-      :is="cartStore.cart.length === 0 ? 'span' : 'router-link'"
-      :to="{ name: 'buy' }" >
-        Valider la commande
-      </component>
+    <BottomTotal :total="+cartStore.totalCart" :disable="disable" :expanded="isExpandedBottomTotal">
+      <template v-slot:expanded-content>
+        <router-link :to="{ name: 'BuyCard' }">
+          <ButtonLong color="primary" icon="smartphone" text-color="white" size="lg" width="90%">Paiement en ligne</ButtonLong>
+        </router-link>
+        <router-link :to="{ name: 'BuySuccessCommand', params: { status: 'unPaid'} }">
+          <ButtonLong color="primary" icon="wallet" text-color="white" size="lg" width="90%">Paiement au comptoire</ButtonLong>
+        </router-link>
+      </template>
+      <div @click="toggleExpand">{{ isExpandedBottomTotal ? 'Fermer le contenu' : 'Valider la commande' }}</div>
     </BottomTotal>
   </q-page>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useCartStore } from 'stores/cart-store'
 import BottomTotal from './../components/menu/BottomTotal.vue'
+import ButtonLong from './../components/menu/ButtonLong.vue'
 import ComplementSelector from 'components/menu/ComplementSelector.vue'
 import IconCardRight from 'components/IconCardRight.vue'
 import { splitDecimal } from 'src/mixins/splitDecimal'
@@ -92,6 +97,7 @@ export default defineComponent({
   name: 'VCart',
   components: {
     BottomTotal,
+    ButtonLong,
     IconCardRight,
     ComplementSelector
   },
@@ -99,8 +105,11 @@ export default defineComponent({
     const cartStore = useCartStore()
     const onModifyElement = ref(null)
     const isOpenModifyModal = ref(false)
+    const isExpandedBottomTotal = ref(false)
     const errors = ref(null)
-
+    const disable = computed(() => {
+      return cartStore.cart.length === 0
+    })
     function updateErrors (val) {
       errors.value = (val || {})
     }
@@ -118,6 +127,10 @@ export default defineComponent({
       isOpenModifyModal.value = true
       onModifyElement.value = element
     }
+    function toggleExpand () {
+      if (disable.value) return
+      isExpandedBottomTotal.value = !isExpandedBottomTotal.value
+    }
     return {
       cartStore,
       modifyQte,
@@ -129,7 +142,10 @@ export default defineComponent({
       textAbstract,
       errors,
       updateErrors,
-      showDetailModal
+      showDetailModal,
+      isExpandedBottomTotal,
+      toggleExpand,
+      disable
     }
   }
 })
