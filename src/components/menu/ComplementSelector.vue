@@ -7,7 +7,7 @@
       <q-checkbox
         :label="complementLine.name + (complementLine.priceTaxed !== 0 ? ' ' + complementLine.priceTaxed + '€' : '')"
         v-model="itemCopy.complements[index].complementLines[ci].isChecked"
-        @click="$forceUpdate()"
+        @click="updateErrors(complement)"
         class="q-py-md"
         style="border-bottom: solid 1px gray"
         checked-icon="radio_button_checked"
@@ -15,7 +15,7 @@
       >
       </q-checkbox>
     </div>
-    <span  class="text-red">{{ checkErrors(complement) }}</span>
+    <div class="text-red">{{ errorsMessage(complement) }}</div>
   </template>
 </template>
 
@@ -33,6 +33,11 @@ export default defineComponent({
       required: true
     }
   },
+  methods: {
+    forceUpdate () {
+      this.$forceUpdate()
+    }
+  },
   emits: ['update:modelValue', 'update:errors'],
   computed: {
     itemCopy () {
@@ -40,6 +45,15 @@ export default defineComponent({
     }
   },
   setup (props, { emit }) {
+    const errorsMap = {
+      isAbove: (complement) => {
+        return `Vous avez selectionné plus de ${complement.maximumn} elements`
+      }
+    }
+    function errorsMessage (complement) {
+      if (Object.keys(props.errors).length === 0) return
+      return errorsMap[props.errors[complement.uuid].error](complement)
+    }
     function checkErrors (complement) {
       return [checkMax(complement)].join('\n')
     }
@@ -54,8 +68,13 @@ export default defineComponent({
       emit('update:errors', copyErrors)
       return isBelow ? '' : `Vous ne pouvez pas choisir plus de ${complement.maximumn} elements`
     }
+    function updateErrors (complement) {
+      checkErrors(complement)
+    }
     return {
-      checkErrors
+      checkErrors,
+      updateErrors,
+      errorsMessage
     }
   }
 })

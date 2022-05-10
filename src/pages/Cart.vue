@@ -20,11 +20,12 @@
             label="Commentaire"
             class="q-mt-lg"
           />
-          <ComplementSelector v-model="onModifyElement" v-model:errors="errors" @update:errors="updateErrors"></ComplementSelector>
+          <ComplementSelector v-model="onModifyElement" v-model:errors="errors"></ComplementSelector>
           <q-card-actions>
           <q-btn
             class="q-my-md q-mx-auto bg-primary text-white"
             style="width: 200px"
+            :disable="!noErrors"
           >
             Valider
           </q-btn>
@@ -37,7 +38,6 @@
         <q-card
           v-for="(element, index) in cartStore.cart"
           :key="index"
-          @click="addToCart(element.id)"
           class="bg-grey-2 row card-border-radius col-12 full-width shadow-custom-1 q-mt-lg"
           style="height: 160px;"
         >
@@ -112,16 +112,16 @@ export default defineComponent({
     const onModifyElement = ref(null)
     const isOpenModifyModal = ref(false)
     const isExpandedBottomTotal = ref(false)
-    const errors = ref(null)
+    const errors = ref({})
     const disable = computed(() => {
       return cartStore.cart.length === 0
+    })
+    const noErrors = computed(() => {
+      return Object.keys(errors.value).length === 0
     })
     const isTabletAndNotEmpty = computed(() => {
       return localStorage.isTablet && !disable.value
     })
-    function updateErrors (val) {
-      errors.value = (val || {})
-    }
     function modifyQte (index, dir) {
       cartStore.modifyQte(index, dir)
     }
@@ -150,12 +150,12 @@ export default defineComponent({
       splitDecimal,
       textAbstract,
       errors,
-      updateErrors,
       showDetailModal,
       isExpandedBottomTotal,
       toggleExpand,
       disable,
-      isTabletAndNotEmpty
+      isTabletAndNotEmpty,
+      noErrors
     }
   }
 })

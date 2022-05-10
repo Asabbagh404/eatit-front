@@ -10,17 +10,13 @@ export const useRestaurantStore = defineStore('restaurant', {
     getCategoryById () {
       return (categoryId) => {
         if (!this.menu) return {}
-        console.log(categoryId)
-        console.log(this.menu.find(el => el.uuid === categoryId))
         this.menu.find(el => el.uuid === categoryId)
       }
     },
     getItemsByCategoryIdAndId () {
       return (catId, itemId) => {
-        console.log('test', catId, itemId)
         if (!this.menu) return {}
         const category = this.getCategoryById(catId)
-        console.log(category)
         category.items.find((el) => {
           return el.uuid === itemId
         })

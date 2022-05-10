@@ -16,7 +16,7 @@
       <h5 class="q-my-none text-bold text-title">{{ itemCopy.name }}</h5>
       <p class="q-mt-md text-caption text-grey-8">{{ itemCopy.description }}</p>
       <div style="border-top: solid 1px grey">
-        <ComplementSelector v-model="itemCopy" :errors="errors"></ComplementSelector>
+        <ComplementSelector v-model="itemCopy" v-model:errors="errors"></ComplementSelector>
       </div>
       <BottomTotal @btnClick="addToCart" :total="sumTotal" :disable="!noErrors">Ajouter à la commande</BottomTotal>
     </div>
@@ -76,9 +76,6 @@ export default defineComponent({
       noErrors = computed(() => {
         return Object.keys(errors.value).length === 0
       })
-    function updateErrors (val) {
-      errors.value = (val || {})
-    }
     function checkErrors (complement) {
       return [checkMax(complement)].join('\n')
     }
@@ -104,8 +101,7 @@ export default defineComponent({
       restaurantStore,
       checkErrors,
       errors,
-      noErrors,
-      updateErrors
+      noErrors
     }
   }
 })
