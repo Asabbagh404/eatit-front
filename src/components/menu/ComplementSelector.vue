@@ -1,10 +1,26 @@
 <template>
   <template v-for="(complement, index) of itemCopy.complements" :key="index">
     <p class="q-mt-lg q-mb-none text-bold text-subtitle">{{ complement.name }}</p>
-    <p class="text-caption text-grey-8"><template v-if="+complement.maximumn !== +complement.complementLines.length">Max: {{ complement.maximumn }}</template><template v-if="complement.minimum !== 0">| Min: {{ complement.minimum }}</template></p>
+    <p class="text-caption text-grey-8">
+      <template v-if="+complement.maximumn !== +complement.complementLines.length">Max: {{ complement.maximumn }}</template>
+      <template v-if="complement.minimum !== 0">| Min: {{ complement.minimum }}</template>
+    </p>
     <div v-for="(complementLine, ci) of complement.complementLines"
          :key="ci">
+      <q-radio
+        v-if="isRadio(complement)"
+        :label="complementLine.name + (complementLine.priceTaxed !== 0 ? ' ' + complementLine.priceTaxed + '€' : '')"
+        v-model="itemCopy.complements[index].isChecked"
+        :val="complementLine.uuid"
+        @click="updateErrors(complement)"
+        class="q-py-md"
+        style="border-bottom: solid 1px gray"
+        checked-icon="radio_button_checked"
+        unchecked-icon="radio_button_unchecked"
+      >
+      </q-radio>
       <q-checkbox
+        v-else
         :label="complementLine.name + (complementLine.priceTaxed !== 0 ? ' ' + complementLine.priceTaxed + '€' : '')"
         v-model="itemCopy.complements[index].complementLines[ci].isChecked"
         @click="updateErrors(complement)"
@@ -50,6 +66,9 @@ export default defineComponent({
         return `Vous avez selectionné plus de ${complement.maximumn} elements`
       }
     }
+    function isRadio (complement) {
+      return complement.maximumn === 1 && complement.minimum === 1
+    }
     function errorsMessage (complement) {
       if (Object.keys(props.errors).length === 0) return
       return errorsMap[props.errors[complement.uuid].error](complement)
@@ -74,7 +93,8 @@ export default defineComponent({
     return {
       checkErrors,
       updateErrors,
-      errorsMessage
+      errorsMessage,
+      isRadio
     }
   }
 })
