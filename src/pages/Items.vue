@@ -19,7 +19,7 @@
       </q-card>
     </q-dialog>
     <h2 class="text-title text-bold q-my-none flex items-center items-category-name">{{ currentCategoriesName }}</h2>
-    <div class="q-pt-none q-px-md">
+    <div class="q-pt-none q-px-md w-full">
       <div class="row">
         <template v-if="currentCategoriesElements.length > 0">
           <component
