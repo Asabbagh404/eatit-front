@@ -26,14 +26,16 @@ export const useRestaurantStore = defineStore('restaurant', {
   actions: {
     getRestaurant () {
       socket.getRestaurant((res) => {
+        console.log(res)
         this.restaurant = res.restaurant
+        this.getMenu(this.restaurant.uuid)
       })
       return this.restaurant
     },
-    getMenu () {
+    getMenu (uuid) {
       this.restaurant = socket.getMenu((res) => {
         this.menu = res.menu.categories
-      })
+      }, uuid)
       return this.menu
     }
   }

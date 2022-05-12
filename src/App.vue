@@ -22,7 +22,6 @@ export default defineComponent({
     onMounted(() => {
       envStore.setEnv()
       restaurantStore.getRestaurant()
-      restaurantStore.getMenu()
     })
     return {
       restaurantStore
