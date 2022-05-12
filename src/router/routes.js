@@ -5,7 +5,8 @@ const routes = [
     path: '',
     component: () => import('layouts/NoLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Home.vue'), name: 'VHome', beforeEnter: isTablet }
+      { path: '', component: () => import('pages/Home.vue'), name: 'VHome', beforeEnter: isTablet },
+      { path: 'admin', component: () => import('pages/Admin/CommandList.vue'), name: 'CommandList', beforeEnter: isAdmin }
     ]
   },
   {
@@ -36,6 +37,7 @@ const routes = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
   }
+
 ]
 
 function isCartEmpty () {
@@ -46,6 +48,10 @@ function isCartEmpty () {
 
 function isTablet () {
   if (!localStorage.isTablet) return { name: 'categories' }
+}
+
+function isAdmin () {
+  return true
 }
 
 export default routes
