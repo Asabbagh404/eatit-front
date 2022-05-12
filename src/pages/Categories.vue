@@ -1,6 +1,6 @@
 <template>
   <VCarousel />
-  <q-page class="flex flex-center column">
+  <q-page class="flex flex-center column q-mb-xl">
     <h2 class="text-title text-bold q-my-none">Menu</h2>
     <div class="q-px-md q-pt-none">
       <div class="row">

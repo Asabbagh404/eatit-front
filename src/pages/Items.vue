@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column items-center q-mt-xl">
+  <q-page class="flex column items-center q-my-xl">
     <q-dialog
       v-model="showDescriptionModal"
       stack-buttons
