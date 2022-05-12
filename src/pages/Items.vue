@@ -40,7 +40,7 @@
               <div style="width: 65%">
                 <q-card-section class="relative-position full-height">
                   <div class="text-h6 text-bold">{{ element.name }}</div>
-                  <div class="text-caption text-dark">{{ textAbstract(element.description, 100) }}</div>
+                  <div class="text-caption text-dark">{{ textAbstract(element.description, 65) }}</div>
                   <div class="row justify-between content-center items-end absolute" style="padding: 0 5px 0 5px;width: 100%;bottom: 0;left: 6px;">
                     <span class="text-h4 text-bold q-mt-md">{{ splitDecimal(element.priceTaxed)[0] }}.<span class="text-h6 text-bold">{{ splitDecimal(element.priceTaxed)[1] }}€</span> </span>
                     <VArrowForward />
