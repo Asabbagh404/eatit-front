@@ -8,7 +8,7 @@ export const useCartStore = defineStore('cart', {
   getters: {
     totalCart () {
       return (this.cart.reduce((tot, curr) => {
-        return tot + (curr.priceTaxed * (curr.quantity || 1))
+        return tot + this.elementTotalPrice(curr)
       }, 0)).toFixed(2)
     },
     elementTotalPrice () {
