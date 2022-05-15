@@ -47,9 +47,8 @@ export default defineComponent({
     })
     const minMaxMessage = computed(() => {
       if (isRadio.value) return 'Obligatoire *'
-      const noMinOrMax = (limit) => complementCopy[limit] === 0
-      const maxContent = noMinOrMax('maxiumn') ? '' : `Max: ${complementCopy.value.maximumn}`
-      const minContent = noMinOrMax('minimum') ? '' : `Min: ${complementCopy.value.minimum}`
+      const maxContent = complementCopy.value.maximumn === 0 ? '' : `Max: ${complementCopy.value.maximumn}`
+      const minContent = complementCopy.value.minimum === 0 ? '' : `Min: ${complementCopy.value.minimum}`
       return `${maxContent} ${minContent.length > 0 && maxContent.length > 0 ? '|' : ''}  ${minContent}`
     })
     const errorsMap = {
@@ -85,6 +84,7 @@ export default defineComponent({
       }
       const copyErrors = checkErrors()
       emit('update:errors', copyErrors)
+      emit('update:modelValue', complementCopy.value)
     }
     return {
       checkErrors,

@@ -17,7 +17,7 @@
       <p class="q-mt-md text-caption text-grey-8">{{ itemCopy.description }}</p>
       <div style="border-top: solid 1px grey">
         <template v-for="(complement, index) of itemCopy.complements" :key="index">
-          <ComplementSelector v-model="itemCopy.complements[index]" v-model:errors="errors[complement.uuid]"></ComplementSelector>
+          <ComplementSelector v-model="itemCopy.complements[index]" v-model:errors="errors[complement.uuid]" @update:modelValue="setTotalValue"></ComplementSelector>
         </template>
       </div>
       <BottomTotal @btnClick="addToCart" :total="sumTotal" :disable="!noErrors">Ajouter à la commande</BottomTotal>
@@ -32,6 +32,7 @@ import { useRestaurantStore } from 'stores/restaurant-store'
 import { useCartStore } from 'stores/cart-store'
 import BottomTotal from 'components/menu/BottomTotal.vue'
 import ComplementSelector from 'components/menu/ComplementSelector.vue'
+import { totalComplementPrice } from 'src/mixins/totalComplementPrice'
 
 export default defineComponent({
   components: {
@@ -61,23 +62,17 @@ export default defineComponent({
             line.isChecked = !!(line.isChecked)
           })
         })
+        setTotalValue(null, copy.priceTaxed)
         return copy
       }),
-      sumTotal = computed(() => {
-        if (itemCopy.value.length === 0) return 0
-        const totalExtra = itemCopy.value.complements.reduce((tot, curr) => {
-          if (!curr.value) return tot
-          return tot + (curr.complementLines.reduce((clTot, clCurr) => {
-            if (!clCurr) return clTot
-            return clTot + clCurr.priceTaxed
-          }))
-        }, 0)
-        return itemCopy.value.priceTaxed + totalExtra
-      }),
+      sumTotal = ref(0),
       errors = ref({}),
       noErrors = computed(() => {
         return Object.values(errors.value).filter(el => el.uuid).length === 0
       })
+    function setTotalValue (val, price) {
+      sumTotal.value = price || itemCopy.value.priceTaxed + totalComplementPrice(itemCopy.value)
+    }
     function checkErrors (complement) {
       return [checkMax(complement)].join('\n')
     }
@@ -103,7 +98,8 @@ export default defineComponent({
       restaurantStore,
       checkErrors,
       errors,
-      noErrors
+      noErrors,
+      setTotalValue
     }
   }
 })

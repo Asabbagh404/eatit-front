@@ -27,8 +27,7 @@
           :key="index"
           :to="{ name: 'items', params: { categoryId: category.uuid } }"
           style="min-width: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;"
-        >
-          <div class="supbar-category-text text-center">{{ shortContent(category.name) }}</div>
+        >{{ shortContent(category.name) }}
         </router-link>
       </q-bar>
     </q-header>

@@ -13,15 +13,17 @@ export const useCartStore = defineStore('cart', {
     },
     elementTotalPrice () {
       return (element) => {
-        return (element.priceTaxed + this.totalExtraPrice(element)) * (element.quantity || 1)
+        return (element.priceTaxed + this.totalComplementPrice(element)) * (element.quantity || 1)
       }
     },
-    totalExtraPrice () {
+    totalComplementPrice () {
       return (element) => {
-        if (!element.extras) return 0
-        return element.extras.reduce((tot, c) => {
-          if (!c.value) return tot
-          return tot + c.priceTaxed
+        if (!element || element.length === 0) return 0
+        return element.complements.reduce((tot, complement) => {
+          return tot + (complement.complementLines.reduce((tot, line) => {
+            if (line.isChecked) return tot + line.priceTaxed
+            return tot
+          }, 0))
         }, 0)
       }
     },
