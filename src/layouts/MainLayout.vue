@@ -21,14 +21,13 @@
         </q-toolbar-title>
         <q-icon name="person" class="text-h4" @click="showLoginOrProfil" v-if="!envStore.isTablet"></q-icon>
       </q-toolbar>
-      <q-bar style="height: 120px" class="row flex-between items-center no-wrap overflow-auto overflow-hidden-y">
+      <q-bar style="height: 70px" class="row flex-between items-center no-wrap overflow-auto overflow-hidden-y">
         <router-link
           v-for="(category, index) of menuStore.menu"
           :key="index"
           :to="{ name: 'items', params: { categoryId: category.uuid } }"
           style="min-width: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;"
         >
-          <div class="overflow-hidden row items-center content-center supbar-image-cat" style="height: 70px;width: 70px;border-radius: 100%; background-size: cover; background-position: center" :style="`background-image: url(${category.image})`"></div>
           <div class="supbar-category-text text-center">{{ shortContent(category.name) }}</div>
         </router-link>
       </q-bar>
@@ -48,7 +47,7 @@
       </q-list>
     </q-drawer>
     <q-page-container>
-      <q-icon name="arrow_back" class="text-h5 q-pa-sm text-dark q-ma-sm fixed bg-primary shadow-custom-1" style="position: fixed;top: 175px;z-index: 999;border-radius: 100%" @click="router.go(-1)"></q-icon>
+      <q-icon name="arrow_back" class="text-h5 q-pa-sm text-dark q-ma-sm fixed bg-primary shadow-custom-1" style="position: fixed;top: 125px;z-index: 999;border-radius: 100%" @click="router.go(-1)"></q-icon>
       <transition
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
