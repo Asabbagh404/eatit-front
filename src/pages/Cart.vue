@@ -28,6 +28,7 @@
             class="q-my-md q-mx-auto bg-primary text-white"
             style="width: 200px"
             :disable="!noErrors"
+            @click="isOpenModifyModal = false"
           >
             Valider
           </q-btn>
