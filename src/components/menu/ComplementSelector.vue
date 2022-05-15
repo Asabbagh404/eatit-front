@@ -1,29 +1,14 @@
 <template>
-  <template v-for="(complement, index) of itemCopy.complements" :key="index">
-    <p class="q-mt-lg q-mb-none text-bold text-subtitle">{{ complement.name }}</p>
+    <p class="q-mt-lg q-mb-none text-bold text-subtitle">{{ complementCopy.name }}</p>
     <p class="text-caption text-grey-8">
-      <template v-if="+complement.maximumn !== +complement.complementLines.length">Max: {{ complement.maximumn }}</template>
-      <template v-if="complement.minimum !== 0">| Min: {{ complement.minimum }}</template>
+      {{ minMaxMessage }}
     </p>
-    <div v-for="(complementLine, ci) of complement.complementLines"
+    <div v-for="(complementLine, ci) of complementCopy.complementLines"
          :key="ci">
-      <q-radio
-        v-if="isRadio(complement)"
-        :label="complementLine.name + (complementLine.priceTaxed !== 0 ? ' ' + complementLine.priceTaxed + '€' : '')"
-        v-model="itemCopy.complements[index].isChecked"
-        :val="complementLine.uuid"
-        @click="updateErrors(complement)"
-        class="q-py-md"
-        style="border-bottom: solid 1px gray"
-        checked-icon="radio_button_checked"
-        unchecked-icon="radio_button_unchecked"
-      >
-      </q-radio>
       <q-checkbox
-        v-else
         :label="complementLine.name + (complementLine.priceTaxed !== 0 ? ' ' + complementLine.priceTaxed + '€' : '')"
-        v-model="itemCopy.complements[index].complementLines[ci].isChecked"
-        @click="updateErrors(complement)"
+        v-model="complementCopy.complementLines[ci].isChecked"
+        @click="updateErrors(complementLine)"
         class="q-py-md"
         style="border-bottom: solid 1px gray"
         checked-icon="radio_button_checked"
@@ -31,12 +16,11 @@
       >
       </q-checkbox>
     </div>
-    <div class="text-red">{{ errorsMessage(complement) }}</div>
-  </template>
+    <div class="text-red">{{ errorsMessage }}</div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
   props: {
@@ -45,7 +29,6 @@ export default defineComponent({
       required: true
     },
     errors: {
-      type: Object,
       required: true
     }
   },
@@ -55,46 +38,60 @@ export default defineComponent({
     }
   },
   emits: ['update:modelValue', 'update:errors'],
-  computed: {
-    itemCopy () {
-      return this.modelValue
-    }
-  },
   setup (props, { emit }) {
+    const complementCopy = computed(() => {
+      return props.modelValue
+    })
+    const isRadio = computed(() => {
+      return +complementCopy.value.maximumn === 1 && +complementCopy.value.minimum === 1
+    })
+    const minMaxMessage = computed(() => {
+      if (isRadio.value) return 'Obligatoire *'
+      const noMinOrMax = (limit) => complementCopy[limit] === 0
+      const maxContent = noMinOrMax('maxiumn') ? '' : `Max: ${complementCopy.value.maximumn}`
+      const minContent = noMinOrMax('minimum') ? '' : `Min: ${complementCopy.value.minimum}`
+      return `${maxContent} ${minContent.length > 0 && maxContent.length > 0 ? '|' : ''}  ${minContent}`
+    })
     const errorsMap = {
-      isAbove: (complement) => {
-        return `Vous avez selectionné plus de ${complement.maximumn} elements`
-      }
+      isAbove: `Vous avez selectionné plus de ${complementCopy.value.maximumn} elements`,
+      isBelow: `Vous avez selectionné moins de ${complementCopy.value.minimum} elements`
     }
-    function isRadio (complement) {
-      return complement.maximumn === 1 && complement.minimum === 1
+    const errorsMessage = computed(() => {
+      if (!props.errors) return ''
+      return Object.values(props.errors).reduce((el, tot) => {
+        if (!errorsMap[el.error]) return tot
+        return tot + ('\n' + el.content)
+      }, '')
+    })
+    function checkErrors () {
+      return checkMaxAndMin()
     }
-    function errorsMessage (complement) {
-      if (Object.keys(props.errors).length === 0) return
-      return errorsMap[props.errors[complement.uuid].error](complement)
-    }
-    function checkErrors (complement) {
-      return [checkMax(complement)].join('\n')
-    }
-    function checkMax (complement) {
-      const copyErrors = { ...props.errors }
-      const isBelow = complement.complementLines.length > complement.complementLines.filter((line) => line.isChecked).length
-      if (!isBelow) {
-        copyErrors[complement.uuid] = { name: complement.name, error: 'isAbove' }
+    function checkMaxAndMin () {
+      const isBelow = complementCopy.value.maximumn >= complementCopy.value.complementLines.filter((line) => line.isChecked).length
+      const isAbove = complementCopy.value.minimum <= complementCopy.value.complementLines.filter((line) => line.isChecked).length
+      if (!isBelow || !isAbove) {
+        const typeError = !isBelow ? 'isAbove' : 'isBelow'
+        return { uuid: complementCopy.value.uuid, name: complementCopy.value.name, error: typeError, content: errorsMap[typeError] }
       } else {
-        delete copyErrors[complement.uuid]
+        return {}
       }
-      emit('update:errors', copyErrors)
-      return isBelow ? '' : `Vous ne pouvez pas choisir plus de ${complement.maximumn} elements`
     }
-    function updateErrors (complement) {
-      checkErrors(complement)
+    function updateErrors (complementLine) {
+      if (isRadio.value) {
+        complementCopy.value.complementLines.forEach((el) => {
+          if (el.uuid === complementLine.uuid) return
+          el.isChecked = false
+        })
+      }
+      const copyErrors = checkErrors()
+      emit('update:errors', copyErrors)
     }
     return {
       checkErrors,
       updateErrors,
       errorsMessage,
-      isRadio
+      complementCopy,
+      minMaxMessage
     }
   }
 })
