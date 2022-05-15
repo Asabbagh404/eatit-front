@@ -20,7 +20,9 @@
             label="Commentaire"
             class="q-mt-lg"
           />
-          <ComplementSelector v-model="onModifyElement" v-model:errors="errors"></ComplementSelector>
+          <template v-for="(complement, index) of onModifyElement.complements" :key="index">
+            <ComplementSelector v-model="onModifyElement.complements[index]" v-model:errors="errors[complement.uuid]" @update:modelValue="setTotalValue"></ComplementSelector>
+          </template>
           <q-card-actions>
           <q-btn
             class="q-my-md q-mx-auto bg-primary text-white"
