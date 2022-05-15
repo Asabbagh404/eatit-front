@@ -14,13 +14,13 @@ function Socket (wss) {
   this.socket = socket
 
   this.getRestaurant = (cb) => {
-    this.socket.emit('on:restaurant', { url })
-    this.socket.on('emit:restaurant', cb)
+    this.socket.emit('req:restaurant', { url })
+    this.socket.on('res:restaurant', cb)
     return this.socket
   }
   this.getMenu = (cb, uuid) => {
-    this.socket.emit('on:menu:actual', { uuid })
-    this.socket.on('emit:menu:actual', cb)
+    this.socket.emit('req:menu:actual', { uuid })
+    this.socket.on('res:menu:actual', cb)
     return this.socket
   }
 }
