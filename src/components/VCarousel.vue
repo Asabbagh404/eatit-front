@@ -12,28 +12,10 @@
       height="30vh"
       class="bg-primary text-white rounded-borders"
     >
-      <q-carousel-slide name="style" class="column no-wrap flex-center" img-src="~assets/slider/1.jpg">
+      <q-carousel-slide v-for="(image, index) in imagesComputed" :key="index" name="style" class="column no-wrap flex-center" :img-src="image">
         <div class="absolute-bottom custom-caption q-pl-sm q-mb-xl" style="background: #7d7d7d4a;">
-          <div class="text-h4">20% sur les glaces</div>
-          <div class="text-subtitle1">Du 22 au 26 avril</div>
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide name="tv" class="column no-wrap flex-center" img-src="~assets/slider/2.jpg">
-        <div class="absolute-bottom custom-caption q-pl-sm q-mb-xl" style="background: #7d7d7d4a;">
-          <div class="text-h4">20% sur les glaces</div>
-          <div class="text-subtitle1">Du 22 au 26 avril</div>
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide name="layers" class="column no-wrap flex-center" img-src="~assets/slider/3.jpg">
-        <div class="absolute-bottom custom-caption q-pl-sm q-mb-xl" style="background: #7d7d7d4a;">
-          <div class="text-h4">20% sur les glaces</div>
-          <div class="text-subtitle1">Du 22 au 26 avril</div>
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide name="map" class="column no-wrap flex-center" img-src="~assets/slider/4.jpg">
-        <div class="absolute-bottom custom-caption q-pl-sm q-mb-xl" style="background: #7d7d7d4a;">
-          <div class="text-h4">20% sur les glaces</div>
-          <div class="text-subtitle1">Du 22 au 26 avril</div>
+<!--          <div class="text-h4">20% sur les glaces</div>-->
+<!--          <div class="text-subtitle1">Du 22 au 26 avril</div>-->
         </div>
       </q-carousel-slide>
     </q-carousel>
@@ -55,16 +37,25 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 
 export default defineComponent({
   name: 'IndexPage',
-  setup () {
-    const lorem = 'lorem ipsum'
+  props: {
+    image: {
+      type: [Array, String],
+      required: true
+    }
+  },
+  setup (props) {
     const slide = ref('style')
+    const imagesComputed = computed(() => {
+      if (typeof props.image === 'string') return [props.image]
+      return props.image
+    })
     return {
-      lorem,
-      slide
+      slide,
+      imagesComputed
     }
   }
 })

@@ -1,5 +1,5 @@
 <template>
-  <VCarousel />
+  <VCarousel :image="restaurantStore.restaurant.image" v-if="restaurantStore.restaurant"/>
   <q-page class="flex flex-center column q-mb-xl">
     <h2 class="text-title text-bold q-my-none">Menu</h2>
     <div class="q-px-md q-pt-none">

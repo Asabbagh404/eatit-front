@@ -16,14 +16,14 @@
         />
         <q-toolbar-title>
           <router-link :to="{ name: 'categories' }">
-            <img src="~assets/logo_465x320.png" alt="" style="height: 40px" class="block q-my-auto">
+            <img :src="restaurantLogo" alt="" style="height: 40px" class="block q-my-auto">
           </router-link>
         </q-toolbar-title>
         <q-icon name="person" class="text-h4" @click="showLoginOrProfil" v-if="!envStore.isTablet"></q-icon>
       </q-toolbar>
       <q-bar style="height: 70px" class="row flex-between items-center no-wrap overflow-auto overflow-hidden-y">
         <router-link
-          v-for="(category, index) of menuStore.menu"
+          v-for="(category, index) of restaurantStore.menu"
           :key="index"
           :to="{ name: 'items', params: { categoryId: category.uuid } }"
         ><p style="min-width: 80px; margin:0 10px; display: flex; flex-direction: column; justify-content: center; align-items: center;white-space: pre"
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch, computed } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import VUserModal from 'components/menu/VUserModal.vue'
 
@@ -119,7 +119,7 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
     const cartStore = useCartStore()
-    const menuStore = useRestaurantStore()
+    const restaurantStore = useRestaurantStore()
     const envStore = useEnvStore()
     const router = useRouter()
     const showLoginOrProfilModal = ref(false)
@@ -128,6 +128,11 @@ export default defineComponent({
       if (!btnShop) return
       btnShop.classList.add('animate__pulse')
       setTimeout(() => btnShop.classList.remove('animate__pulse'), 2000)
+    })
+    const restaurantLogo = computed(() => {
+      if (!restaurantStore.restaurant) return ''
+      console.log(restaurantStore.restaurant)
+      return restaurantStore.restaurant.logo
     })
     function showLoginOrProfil () {
       showLoginOrProfilModal.value = true
@@ -142,12 +147,13 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       cartStore,
-      menuStore,
+      restaurantStore,
       router,
       envStore,
       showLoginOrProfil,
       showLoginOrProfilModal,
-      shortContent
+      shortContent,
+      restaurantLogo
     }
   }
 })
