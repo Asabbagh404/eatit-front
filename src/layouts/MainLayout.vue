@@ -26,8 +26,8 @@
           v-for="(category, index) of menuStore.menu"
           :key="index"
           :to="{ name: 'items', params: { categoryId: category.uuid } }"
-          style="min-width: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;"
-        >{{ shortContent(category.name) }}
+        ><p style="min-width: 80px; margin:0 10px; display: flex; flex-direction: column; justify-content: center; align-items: center;white-space: pre"
+        >{{ shortContent(category.name) }}</p>
         </router-link>
       </q-bar>
     </q-header>
