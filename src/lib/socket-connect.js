@@ -1,10 +1,11 @@
 import { io } from 'socket.io-client'
 const RESTAURANT_ID = 'heaven-food'
-const URL_HOST = window.location.host
-const CURRENTSUBDOMAIN = URL_HOST.split('.')[0]
+// const URL_HOST = window.location.host
+// const CURRENTSUBDOMAIN = URL_HOST.split('.')[0]
 
 function Socket (wss) {
-  const url = import.meta.env.PROD ? CURRENTSUBDOMAIN : RESTAURANT_ID
+  // const url = import.meta.env.PROD ? CURRENTSUBDOMAIN : RESTAURANT_ID
+  const url = RESTAURANT_ID
 
   const socket = io(wss, { autoConnect: false })
   socket.onAny((event, ...args) => {
