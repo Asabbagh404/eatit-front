@@ -4,6 +4,7 @@ export const useEnvStore = defineStore('env', {
   state: () => ({
     isTablet: true,
     isConnected: false,
+    scanId: null,
     uuid: false,
     isAdmin: false
   }),

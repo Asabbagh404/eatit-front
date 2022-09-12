@@ -1,5 +1,7 @@
 // import { useCartStore } from 'stores/cart-store'
 
+import { useEnvStore } from 'src/stores/env-store'
+
 const routes = [
   {
     path: '',
@@ -47,7 +49,8 @@ function isCartEmpty () {
 }
 
 function isTablet () {
-  if (!localStorage.isTablet) return { name: 'categories' }
+  console.log(!!useEnvStore().scanId)
+  if (!localStorage.isTablet || useEnvStore().scanId) return { name: 'categories' }
 }
 
 function isAdmin () {
