@@ -8,7 +8,7 @@
           <div class="text-subtitle text-bold">Nos {{ name.toLowerCase() }}</div>
           <q-card class="card-border-radius shadow-custom-1 flex column" style="flex-grow: 1; justify-content: center;">
             <router-link :to="{ name: 'items', params: { categoryId: uuid } }">
-              <div style="height: 157px;" class="overflow-hidden row content-center q-ma-none card-border-radius" :style="`background: url('${ image }');background-size: cover;background-position: center;`">
+              <div class="categories__items overflow-hidden row content-center q-ma-none card-border-radius" :style="`background: url('${ image }');background-size: cover;background-position: center;`">
                 <IconCardRight class="absolute" style="right: 0; bottom: 0"/>
               </div>
             </router-link>
@@ -39,3 +39,17 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped lang="scss">
+.categories__items {
+  height: 157px;
+}
+@media screen and (min-width: 1024px) {
+  .categories__items {
+    height: 300px;
+  }
+  .q-carousel {
+    display: none;
+  }
+}
+</style>

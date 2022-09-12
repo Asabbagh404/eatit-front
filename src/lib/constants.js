@@ -1,0 +1,1 @@
+export const BREAKPOINTS = {xl: 1900, lg: 1024, md: 800, sm: 600, xs: 400 }

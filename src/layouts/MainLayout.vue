@@ -160,10 +160,18 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+
+@keyframes pulse {
+    0% {transform: scale(1);}
+    30% {transform: scale(1.3);}
+    60% {transform: scale(1);}
+    80% {transform: scale(1.1);}
+    100% {transform: scale(1);}
+}
 .animate__pulse {
   transition: all ease .2s;
   animation: pulse;
-  animation-duration: 1s;
+  animation-duration: .8s;
 }
 .router-link-active {
   .supbar-category-text {

@@ -28,12 +28,16 @@
 <script>
 import { defineComponent } from 'vue'
 import { useEnvStore } from 'stores/env-store'
+let envStore = useEnvStore()
 
 export default defineComponent({
   name: 'VHome',
   mounted () {
-    const envStore = useEnvStore()
+    envStore = useEnvStore()
     if (!envStore.isTablet) this.$router.push({ name: 'categories' })
+  },
+  beforeRouteLeave () {
+    envStore.scanId = true
   }
 })
 </script>
